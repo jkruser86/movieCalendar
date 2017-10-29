@@ -1,0 +1,8 @@
+<Context docBase="moviecalendar" path="/moviecalendar" reloadable="true">
+    <Realm className="org.apache.catalina.realm.JDBCRealm"
+           driverName="com.mysql.jdbc.Driver"
+           connectionURL="jdbc:mysql://localhost:3306/moviecalendar?user=tomcat&amp;password=tomcat"
+           userTable="user" userNameCol="user_name" userCredCol="user_pass"
+           userRoleTable="user_roles" roleNameCol="role_name" >
+    </Realm>
+</Context>

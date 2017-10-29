@@ -1,0 +1,1 @@
+<h3>Account deleted. Thanks for using StreamSearch</h3>
