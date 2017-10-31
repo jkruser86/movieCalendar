@@ -46,6 +46,7 @@ public class SearchResultsServlet extends HttpServlet {
         //System.out.println("results: " + results.toString());
         //ResultsItem result = results.getResults().get(0);
 
+        req.setAttribute("movies", allResults);
         String url = "/search-results.jsp";
         RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(url);
 
