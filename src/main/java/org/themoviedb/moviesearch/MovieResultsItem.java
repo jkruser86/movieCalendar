@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import javax.annotation.Generated;
 
 @Generated("com.robohorse.robopojogenerator")
-public class ResultsItem{
+public class MovieResultsItem {
 
 	@JsonProperty("overview")
 	private String overview;
@@ -164,7 +164,7 @@ public class ResultsItem{
 	@Override
  	public String toString(){
 		return 
-			"ResultsItem{" + 
+			"MovieResultsItem{" +
 			"overview = '" + overview + '\'' + 
 			",original_language = '" + originalLanguage + '\'' + 
 			",original_title = '" + originalTitle + '\'' + 

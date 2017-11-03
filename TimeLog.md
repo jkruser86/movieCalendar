@@ -45,3 +45,11 @@
 | 10/20/17 | Finally got authentication working through AWS | 2 hours | My jar file got moved empty for some reason |
 | 10/21/17 | Screwed up my database a bit while working so cleaned that up | 2 hours | |
 | 10/22/17 | Fixed up some of my tests and worked on getting account deletion working | 2 hours | |
+| 10/23/17 | Worked on the week 8 exercise and worked on some account functionality | 2 hours | |
+| 10/24/17 | Continue working on account functionality | 2 hours | |
+| 10/25/17 | Finished week 8 exercise and tried getting project loaded to AWS | 2 hours | Struggled with AWS for quite a while |
+| 10/26/17 | Worked on some account functionality again | 2 hours | |
+| 10/27/17 | Worked on reviews for the projects | 2 hours | | 
+| 10/28/17 | Worked on week 10 exercise | 2 hours | |
+| 10/29/17 | Restructered project so that it is now a notification service for when a movie is in theaters, on demand, or on video | 3 hours | Couldn't find a good API to work with my origina plan so used similar concepts to restructure my idea |
+| 10/30/17 | Got some API functionality into my site | 2 hours | |

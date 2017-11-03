@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import javax.annotation.Generated;
 
 @Generated("com.robohorse.robopojogenerator")
-public class FullMovie{
+public class MovieDataResults{
 
 	@JsonProperty("original_language")
 	private String originalLanguage;
@@ -30,6 +30,9 @@ public class FullMovie{
 
 	@JsonProperty("popularity")
 	private double popularity;
+
+	@JsonProperty("release_dates")
+	private ReleaseDatesResults releaseDatesResults;
 
 	@JsonProperty("production_countries")
 	private List<ProductionCountriesItem> productionCountries;
@@ -68,7 +71,7 @@ public class FullMovie{
 	private double voteAverage;
 
 	@JsonProperty("belongs_to_collection")
-	private BelongsToCollection belongsToCollection;
+	private Object belongsToCollection;
 
 	@JsonProperty("tagline")
 	private String tagline;
@@ -144,6 +147,14 @@ public class FullMovie{
 
 	public double getPopularity(){
 		return popularity;
+	}
+
+	public void setReleaseDatesResults(ReleaseDatesResults releaseDatesResults){
+		this.releaseDatesResults = releaseDatesResults;
+	}
+
+	public ReleaseDatesResults getReleaseDatesResults(){
+		return releaseDatesResults;
 	}
 
 	public void setProductionCountries(List<ProductionCountriesItem> productionCountries){
@@ -242,11 +253,11 @@ public class FullMovie{
 		return voteAverage;
 	}
 
-	public void setBelongsToCollection(BelongsToCollection belongsToCollection){
+	public void setBelongsToCollection(Object belongsToCollection){
 		this.belongsToCollection = belongsToCollection;
 	}
 
-	public BelongsToCollection getBelongsToCollection(){
+	public Object getBelongsToCollection(){
 		return belongsToCollection;
 	}
 
@@ -285,7 +296,7 @@ public class FullMovie{
 	@Override
  	public String toString(){
 		return 
-			"FullMovie{" + 
+			"MovieDataResults{" + 
 			"original_language = '" + originalLanguage + '\'' + 
 			",imdb_id = '" + imdbId + '\'' + 
 			",video = '" + video + '\'' + 
@@ -294,6 +305,7 @@ public class FullMovie{
 			",revenue = '" + revenue + '\'' + 
 			",genres = '" + genres + '\'' + 
 			",popularity = '" + popularity + '\'' + 
+			",release_dates = '" + releaseDatesResults + '\'' +
 			",production_countries = '" + productionCountries + '\'' + 
 			",id = '" + id + '\'' + 
 			",vote_count = '" + voteCount + '\'' + 

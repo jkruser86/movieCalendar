@@ -1,7 +1,12 @@
-# streamSearchProject
+# MovieCalendar
 
-This is the repository for my individual project that I am calling "Stream Search"
+This is the repository for my individual project that I am calling "Movie Calendar"
 
 ### Problem Statement
 
-There are lots of times in my life when I get the urge to watch a specific movie that I do not own. When I decide to watch a movie and before I go and rent or buy it, I want to check some of the streaming sites that I subscribe to. I currently have subscriptions to 4 various stream sites and have to manually search through all of them to see if the specific movie or TV show is available. Instead, I would like a single search engine which would allow me to search one place to see if the video is available from any of these streaming services. If the movie is not available, your search can be added to a daily scan which will email you to notify you when videos matching the search criteria are available.
+I am a big movie lover and tend to go to movies or buy them pretty frequently. With so many releases happening on a weekly basis, it is hard for me to keep track of when stuff gets released.
+
+MovieCalendar will send you a reminder when a movie is about to be released. You can decide if you want notifications on theatrical released, digital release, or physical release. It will also allow you to choose when you want to be notified of impending release (days, weeks, months).
+
+### Project Technologies/Techniques
+* 
