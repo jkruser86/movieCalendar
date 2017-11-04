@@ -53,3 +53,6 @@
 | 10/28/17 | Worked on week 10 exercise | 2 hours | |
 | 10/29/17 | Restructered project so that it is now a notification service for when a movie is in theaters, on demand, or on video | 3 hours | Couldn't find a good API to work with my origina plan so used similar concepts to restructure my idea |
 | 10/30/17 | Got some API functionality into my site | 2 hours | |
+| 10/31/17 | Worked on some more API functionality | 2 hours | |
+| 11/01/17 | Tried a few different things related to the API to return the data I need | 2 hours | |
+| 11/02/17 | Continued API development | 2 hours | |

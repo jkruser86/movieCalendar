@@ -33,19 +33,8 @@ public class SearchResultsServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        /** Client client = ClientBuilder.newClient();
-        WebTarget target =
-                client.target("https://api.themoviedb.org/3/search/movie?api_key=25363f0be2ee0fc2fd2e9caa793b33f4&query=" +
-                req.getParameter("term"));
-        String response = target.request(MediaType.APPLICATION_JSON).get(String.class);
-
-        ObjectMapper mapper = new ObjectMapper();
-        Results results = mapper.readValue(response, Results.class);
-
-        List<MovieResultsItem> allResults = new ArrayList<MovieResultsItem>();
-        allResults = results.getResults(); */
-
-        List<MovieResultsItem> allResults = getAllResults(req.getParameter("term"));
+        String searchTerm = req.getParameter("term").replaceAll(" ", "+");
+        List<MovieResultsItem> allResults = getAllResults(searchTerm);
 
         List<Movie> allMovies = new ArrayList<Movie>();
         for (MovieResultsItem item : allResults) {
