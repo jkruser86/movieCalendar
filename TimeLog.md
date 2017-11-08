@@ -56,3 +56,7 @@
 | 10/31/17 | Worked on some more API functionality | 2 hours | |
 | 11/01/17 | Tried a few different things related to the API to return the data I need | 2 hours | |
 | 11/02/17 | Continued API development | 2 hours | |
+| 11/03/17 | Worked on getting search screen working correctly | 2 hours | |
+| 11/04/17 | Tried getting search site to be able to return saved movie to servlet | 2 hours | |
+| 11/06/17 | Worked on getting modal working for my search screen | 4 hours | After talking with Layton, he helped me figure out the best way bring data back to my servlet and it was through a modal |
+| 11/07/17 | Continued working on modal and some of the saved movie stuff | 2 hours | |
