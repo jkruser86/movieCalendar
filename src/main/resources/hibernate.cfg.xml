@@ -30,9 +30,9 @@
         <property name="c3p0.idle_test_period">3000</property>
 
         <!-- List the annotated entity class/es -->
-        <mapping class="edu.matc.movieCalendar.entity.Search"/>
         <mapping class="edu.matc.movieCalendar.entity.User"/>
         <mapping class="edu.matc.movieCalendar.entity.UserRoles"/>
+        <mapping class="edu.matc.movieCalendar.entity.Reminders"/>
 
     </session-factory>
 

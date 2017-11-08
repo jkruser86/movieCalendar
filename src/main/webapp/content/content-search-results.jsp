@@ -35,7 +35,7 @@
             var physical = $(this).closest("tr").find("td:eq(6)").text();
             var mymodal = $('#addMovieModal');
 
-            mymodal.find('.modal-title').text("When do you want to be reminded?");
+            mymodal.find('.modal-title').text("When do you want to be reminded and for what release?");
             mymodal.find('#movie_id').val(id);
             $('#movie_poster').attr('src',poster);
             mymodal.find('#movie_title').val(title);
@@ -128,7 +128,7 @@
                     <h4 class="modal-title">Set Reminder?</h4>
                 </div>
                 <div class="modal-body" style="padding: 10px;">
-                    <form class="form-horizontal" action="addMovie" method="post"  id="add_form">
+                    <form class="form-horizontal" action="movieSave" method="post"  id="add_form">
                         <input type="HIDDEN" name="poster_path" id="poster_path">
                         <div class="row">
                             <label class="col-md-2 control-label">ID</label>
@@ -158,32 +158,54 @@
                             <label class="col-md-2 control-label">Theatrical Date</label>
                             <div class="col-lg-2 col-md-2 col-sm-2" style="padding-bottom: 10px;" style="padding-top: 10px;">
                                 <input id="movie_theater" name="movie_theater" class="form-control"  type="text" readonly>
-                                <!--<input id="theater-number" name="theater-number" class="form-control" type="number">-->
                             </div>
-                            <label class="col-md-2 control-label">EnterNumber</label>
+                            <label class="col-md-2 control-label">Enter Number</label>
                             <div class="col-lg-2 col-md-2 col-sm-2" style="padding-bottom: 10px;" style="padding-top: 10px;">
-                                <!--<input type="number" class="form-control" id="theater-number">-->
-                                <input id="theater-number" name="theater-number" class="form-control" type="number">
+                                <input id="theater_number" name="theater_number" class="form-control" type="number" min="0" max="12">
                             </div>
-                            <!--<div class="form-group">
-                                <label for="theater-timeframe">Select timeframe</label>
-                                <select class="form-control" id="theater-timeframe">
+                            <label class="col-md-2 control-label">Timeframe</label>
+                            <div class="col-lg-2 col-md-2 col-sm-2" style="padding-bottom: 10px;" style="padding-top: 10px;">
+                                <select id="theater_timeframe" name="theater_timeframe" class="form-control">
                                     <option>Day</option>
                                     <option>Week</option>
                                     <option>Month</option>
                                 </select>
-                            </div>-->
+                            </div>
                         </div>
                         <div class="row">
                             <label class="col-md-2 control-label">Digital Date</label>
                             <div class="col-lg-2 col-md-2 col-sm-2" style="padding-bottom: 10px;" style="padding-top: 10px;">
                                 <input id="movie_digital" name ="movie_digital" class="form-control"  type="text" readonly>
                             </div>
+                            <label class="col-md-2 control-label">Enter Number</label>
+                            <div class="col-lg-2 col-md-2 col-sm-2" style="padding-bottom: 10px;" style="padding-top: 10px;">
+                                <input id="digital_number" name="digital_number" class="form-control" type="number" min="0" max="12">
+                            </div>
+                            <label class="col-md-2 control-label">Timeframe</label>
+                            <div class="col-lg-2 col-md-2 col-sm-2" style="padding-bottom: 10px;" style="padding-top: 10px;">
+                                <select id="digital_timeframe" name="digital_timeframe" class="form-control">
+                                    <option>Day</option>
+                                    <option>Week</option>
+                                    <option>Month</option>
+                                </select>
+                            </div>
                         </div>
                         <div class="row">
                             <label class="col-md-2 control-label">Physical Date</label>
                             <div class="col-lg-2 col-md-2 col-sm-2" style="padding-bottom: 10px;" style="padding-top: 10px;">
                                 <input id="movie_physical" name ="movie_physical" class="form-control"  type="text" readonly>
+                            </div>
+                            <label class="col-md-2 control-label">Enter Number</label>
+                            <div class="col-lg-2 col-md-2 col-sm-2" style="padding-bottom: 10px;" style="padding-top: 10px;">
+                                <input id="physical_number" name="physical_number" class="form-control" type="number" min="0" max="12">
+                            </div>
+                            <label class="col-md-2 control-label">Timeframe</label>
+                            <div class="col-lg-2 col-md-2 col-sm-2" style="padding-bottom: 10px;" style="padding-top: 10px;">
+                                <select id="physical_timeframe" name="physical_timeframe" class="form-control">
+                                    <option>Day</option>
+                                    <option>Week</option>
+                                    <option>Month</option>
+                                </select>
                             </div>
                         </div>
                         <div class="row">

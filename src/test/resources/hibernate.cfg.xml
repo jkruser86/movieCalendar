@@ -26,9 +26,9 @@
             import.sql is your db dump -->
 
         <!-- List the annotated entity class/es -->
-        <mapping class="edu.matc.movieCalendar.entity.Search"/>
         <mapping class="edu.matc.movieCalendar.entity.User"/>
         <mapping class="edu.matc.movieCalendar.entity.UserRoles"/>
+        <mapping class="edu.matc.movieCalendar.entity.Reminders"/>
 
     </session-factory>
 
