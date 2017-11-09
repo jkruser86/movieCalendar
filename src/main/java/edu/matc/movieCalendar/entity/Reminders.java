@@ -1,12 +1,10 @@
 package edu.matc.movieCalendar.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.IdClass;
+import javax.persistence.*;
 
 @Entity
 @IdClass(RemindersPK.class)
+@Table(name = "reminders")
 public class Reminders {
     private String userName;
     private int movieId;

@@ -6,7 +6,7 @@
 <body>
 <div id="wrap">
     <c:import url="main-bar.jsp" />
-    <c:import url="content/content-create-acct.jsp" />
+    <c:import url="content-create-acct.jsp" />
 </div>
 </body>
 </html>

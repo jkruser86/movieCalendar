@@ -1,4 +1,4 @@
-<%@include file="../taglib.jsp"%>
+<%@include file="taglib.jsp"%>
 
 <!--<script type="text/javascript" src="javascript/dataTable.js"></script>-->
 

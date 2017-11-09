@@ -49,13 +49,14 @@ public class UserRoles {
         return result;
     }
 
-    /**@OneToOne
-     @JoinColumn(name = "user_name", referencedColumnName = "user_name", nullable = false)
-     public User getUserByUserName() {
-     return userByUserName;
-     }
+    /**
+    @OneToOne
+    @JoinColumn(name = "user_name", referencedColumnName = "user_name", nullable = false)
+    public User getUserByUserName() {
+        return userByUserName;
+    }
 
-     public void setUserByUserName(User userByUserName) {
-     this.userByUserName = userByUserName;
+    public void setUserByUserName(User userByUserName) {
+        this.userByUserName = userByUserName;
      } */
 }

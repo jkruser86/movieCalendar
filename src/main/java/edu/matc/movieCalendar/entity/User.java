@@ -60,4 +60,5 @@ public class User {
         result = 31 * result + (userEmail != null ? userEmail.hashCode() : 0);
         return result;
     }
+
 }

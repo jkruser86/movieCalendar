@@ -6,7 +6,7 @@
 <body>
 <div id="wrap">
     <c:import url="main-bar.jsp" />
-    <c:import url="content/content-logout.jsp" />
+    <c:import url="content-logout.jsp" />
 </div>
 </body>
 </html>

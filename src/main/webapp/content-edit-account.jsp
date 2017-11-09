@@ -1,3 +1,6 @@
+<script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+<script src='http://cdnjs.cloudflare.com/ajax/libs/bootstrap-validator/0.4.5/js/bootstrapvalidator.min.js'></script>
+
 <div class="container">
     <form class="form-horizontal" action="saveEdit" method="post" id="reg_form">
         <fieldset>

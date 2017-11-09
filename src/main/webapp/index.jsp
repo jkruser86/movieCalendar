@@ -6,7 +6,7 @@
 <body>
 <div id="wrap">
     <c:import url="main-bar.jsp" />
-    <c:import url="content/content-home.jsp" />
+    <c:import url="content-home.jsp" />
 </div>
 </body>
 </html>

@@ -6,7 +6,7 @@
 <body>
 <div id="wrap">
     <c:import url="main-bar.jsp" />
-    <c:import url="content/content-delete-account.jsp" />
+    <c:import url="content-delete-account.jsp" />
 </div>
 </body>
 </html>
