@@ -7,8 +7,6 @@ import java.io.Serializable;
 public class RemindersPK implements Serializable {
     private String userName;
     private int movieId;
-    private String format;
-    private int daysBefore;
 
     @Column(name = "user_name", nullable = false, length = 15)
     @Id
@@ -30,26 +28,6 @@ public class RemindersPK implements Serializable {
         this.movieId = movieId;
     }
 
-    @Column(name = "format", nullable = false, length = 15)
-    @Id
-    public String getFormat() {
-        return format;
-    }
-
-    public void setFormat(String format) {
-        this.format = format;
-    }
-
-    @Column(name = "days_before", nullable = false)
-    @Id
-    public int getDaysBefore() {
-        return daysBefore;
-    }
-
-    public void setDaysBefore(int daysBefore) {
-        this.daysBefore = daysBefore;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -58,9 +36,7 @@ public class RemindersPK implements Serializable {
         RemindersPK that = (RemindersPK) o;
 
         if (movieId != that.movieId) return false;
-        if (daysBefore != that.daysBefore) return false;
         if (userName != null ? !userName.equals(that.userName) : that.userName != null) return false;
-        if (format != null ? !format.equals(that.format) : that.format != null) return false;
 
         return true;
     }
@@ -69,8 +45,6 @@ public class RemindersPK implements Serializable {
     public int hashCode() {
         int result = userName != null ? userName.hashCode() : 0;
         result = 31 * result + movieId;
-        result = 31 * result + (format != null ? format.hashCode() : 0);
-        result = 31 * result + daysBefore;
         return result;
     }
 }

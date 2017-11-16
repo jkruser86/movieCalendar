@@ -5,6 +5,7 @@ import org.apache.log4j.Logger;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,7 +37,37 @@ public class RemindersDao {
         return reminders;
     }
 
-    public Reminders getReminder(String userName) {
+    /**public Reminders getReminder(String userName) {
 
+    }*/
+
+    /**
+     * Adds a reminder to the database
+     *
+     * @param reminder The reminder to add
+     */
+    public void addReminder(Reminders reminder) {
+        Transaction transaction = null;
+        Session session = null;
+
+        try {
+            session = SessionFactoryProvider.getSessionFactory().openSession();
+            transaction = session.beginTransaction();
+            session.save(reminder);
+            transaction.commit();
+        } catch (HibernateException he) {
+            log.error("Error saving reminder " + reminder, he);
+            if (transaction != null) {
+                try {
+                    transaction.rollback();
+                } catch (HibernateException he2) {
+                    log.error("Error rolling back save of reminder " + reminder, he2);
+                }
+            }
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
     }
 }

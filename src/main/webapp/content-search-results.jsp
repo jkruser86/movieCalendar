@@ -66,7 +66,13 @@
 
 <div class="container-fluid">
     <div class="row">
-        <h4>Search Results</h4>
+        <h2>Search Results</h2>
+        <br/>
+        <c:if test="${pageContext.request.userPrincipal == null}">
+            <div class="well well-lg">
+                Please login to be reminded when a movie is released
+            </div>
+        </c:if>
         <table id="resultsTable" class="display" cellspacing="0" width="100%">
             <thead>
                 <th>Movie ID</th>
@@ -111,9 +117,18 @@
                                 <td>${movie.physicalRelease}</td>
                             </c:otherwise>
                         </c:choose>
-                        <td>
-                            <button type="button" id="${movie.id}" class="btnadd btn btn-xs btn-success"><span class="glyphicon glyphicon-plus"></span></button>
-                        </td>
+                        <c:choose>
+                            <c:when test="${pageContext.request.userPrincipal == null}">
+                                <td>
+                                    <button type="button" id="${movie.id}" class="btndel btn btn-xs btn-default disabled"><span class="glyphicon glyphicon-remove"></span></button>
+                                </td>
+                            </c:when>
+                            <c:otherwise>
+                                <td>
+                                    <button type="button" id="${movie.id}" class="btnadd btn btn-xs btn-success"><span class="glyphicon glyphicon-plus"></span></button>
+                                </td>
+                            </c:otherwise>
+                        </c:choose>
                     </tr>
                 </c:forEach>
             </tbody>

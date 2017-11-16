@@ -60,3 +60,11 @@
 | 11/04/17 | Tried getting search site to be able to return saved movie to servlet | 2 hours | |
 | 11/06/17 | Worked on getting modal working for my search screen | 4 hours | After talking with Layton, he helped me figure out the best way bring data back to my servlet and it was through a modal |
 | 11/07/17 | Continued working on modal and some of the saved movie stuff | 2 hours | |
+| 11/08/17 | Got modal working after a fight | 2 hours | |
+| 11/09/17 | Worked on cleaning up the data from the modal | 2 hours | |
+| 11/10/17 | Worked on getting reminder table setup with hibernate | 2 hours | |
+| 11/11/17 | Worked on my portion of the group project | 2 hours | |
+| 11/12/17 | Met up to work on the group project and continued to work on it on my own | 4 hours | |
+| 11/13/17 | Cleaned up some code for the group project and did the javadoc for everything | 2 hours | |
+| 11/14/17 | Made all the tests for our group project | 2 hours | |
+| 11/15/17 | Presented group project and worked more on the search results | 2 hours | |

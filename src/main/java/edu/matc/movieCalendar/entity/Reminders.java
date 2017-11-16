@@ -8,8 +8,9 @@ import javax.persistence.*;
 public class Reminders {
     private String userName;
     private int movieId;
-    private String format;
-    private int daysBefore;
+    private int theaterDaysBefore;
+    private int digitalDaysBefore;
+    private int physicalDaysBefore;
 
     @Id
     @Column(name = "user_name", nullable = false, length = 15)
@@ -31,24 +32,34 @@ public class Reminders {
         this.movieId = movieId;
     }
 
-    @Id
-    @Column(name = "format", nullable = false, length = 15)
-    public String getFormat() {
-        return format;
+    @Basic
+    @Column(name = "theater_days_before", nullable = false)
+    public int getTheaterDaysBefore() {
+        return theaterDaysBefore;
     }
 
-    public void setFormat(String format) {
-        this.format = format;
+    public void setTheaterDaysBefore(int theaterDaysBefore) {
+        this.theaterDaysBefore = theaterDaysBefore;
     }
 
-    @Id
-    @Column(name = "days_before", nullable = false)
-    public int getDaysBefore() {
-        return daysBefore;
+    @Basic
+    @Column(name = "digital_days_before", nullable = false)
+    public int getDigitalDaysBefore() {
+        return digitalDaysBefore;
     }
 
-    public void setDaysBefore(int daysBefore) {
-        this.daysBefore = daysBefore;
+    public void setDigitalDaysBefore(int digitalDaysBefore) {
+        this.digitalDaysBefore = digitalDaysBefore;
+    }
+
+    @Basic
+    @Column(name = "physical_days_before", nullable = false)
+    public int getPhysicalDaysBefore() {
+        return physicalDaysBefore;
+    }
+
+    public void setPhysicalDaysBefore(int physicalDaysBefore) {
+        this.physicalDaysBefore = physicalDaysBefore;
     }
 
     @Override
@@ -59,9 +70,10 @@ public class Reminders {
         Reminders reminders = (Reminders) o;
 
         if (movieId != reminders.movieId) return false;
-        if (daysBefore != reminders.daysBefore) return false;
+        if (theaterDaysBefore != reminders.theaterDaysBefore) return false;
+        if (digitalDaysBefore != reminders.digitalDaysBefore) return false;
+        if (physicalDaysBefore != reminders.physicalDaysBefore) return false;
         if (userName != null ? !userName.equals(reminders.userName) : reminders.userName != null) return false;
-        if (format != null ? !format.equals(reminders.format) : reminders.format != null) return false;
 
         return true;
     }
@@ -70,8 +82,9 @@ public class Reminders {
     public int hashCode() {
         int result = userName != null ? userName.hashCode() : 0;
         result = 31 * result + movieId;
-        result = 31 * result + (format != null ? format.hashCode() : 0);
-        result = 31 * result + daysBefore;
+        result = 31 * result + theaterDaysBefore;
+        result = 31 * result + digitalDaysBefore;
+        result = 31 * result + physicalDaysBefore;
         return result;
     }
 }
