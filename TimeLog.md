@@ -68,3 +68,4 @@
 | 11/13/17 | Cleaned up some code for the group project and did the javadoc for everything | 2 hours | |
 | 11/14/17 | Made all the tests for our group project | 2 hours | |
 | 11/15/17 | Presented group project and worked more on the search results | 2 hours | |
+| 11/16/17 | Worked on getting Quartz Scheduler into project | 3 hours | Works locally but doesn't appear to be working on AWS |
