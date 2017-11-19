@@ -2,6 +2,8 @@ package edu.matc.movieCalendar.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import edu.matc.movieCalendar.util.Movie;
+import edu.matc.movieCalendar.util.MovieApiCalls;
+import org.apache.log4j.Logger;
 import org.themoviedb.moviesearch.MovieResultsItem;
 import org.themoviedb.moviesearch.ReleaseDatesItem;
 import org.themoviedb.moviesearch.MovieResults;
@@ -28,40 +30,32 @@ import java.util.List;
 
 public class SearchResultsServlet extends HttpServlet {
 
-    private final String apiKey = "25363f0be2ee0fc2fd2e9caa793b33f4";
+    private final Logger log = Logger.getLogger(this.getClass());
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         String searchTerm = req.getParameter("term").replaceAll(" ", "+");
-        List<MovieResultsItem> allResults = getAllResults(searchTerm);
+        MovieApiCalls movieApiCalls = new MovieApiCalls();
+        List<MovieResultsItem> allResults = new ArrayList<MovieResultsItem>();
+
+        try {
+            allResults = movieApiCalls.getAllResults(searchTerm);
+        } catch (IOException io) {
+            log.error("Error getting all search results", io);
+        }
 
         List<Movie> allMovies = new ArrayList<Movie>();
         for (MovieResultsItem item : allResults) {
 
-            Movie movie = new Movie(item, apiKey);
+            Movie movie = movieApiCalls.getMovieInfo(item.getId());
             allMovies.add(movie);
-            //System.out.println("All Results: " + item.getTitle());
         }
-        //System.out.println("results: " + results.toString());
-        //MovieResultsItem result = results.getResults().get(0);
 
         req.setAttribute("movies", allMovies);
         String url = "/search-results.jsp";
         RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(url);
 
         dispatcher.forward(req, resp);
-    }
-
-    private List<MovieResultsItem> getAllResults(String term) throws IOException {
-        Client client = ClientBuilder.newClient();
-        WebTarget target =
-                client.target("https://api.themoviedb.org/3/search/movie?api_key=" + apiKey + "&query=" + term);
-        String response = target.request(MediaType.APPLICATION_JSON).get(String.class);
-
-        ObjectMapper mapper = new ObjectMapper();
-        MovieResults results = mapper.readValue(response, MovieResults.class);
-
-        return results.getResults();
     }
 }

@@ -70,3 +70,4 @@
 | 11/15/17 | Presented group project and worked more on the search results | 2 hours | |
 | 11/16/17 | Worked on getting Quartz Scheduler into project | 3 hours | Works locally but doesn't appear to be working on AWS |
 | 11/17/17 | Added email functionality and got Quartz working on AWS | 2 hours | |
+| 11/18/17 | Cleaned up the code a bit and continued working on email functionality | 2 hours | |

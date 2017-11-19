@@ -1,10 +1,15 @@
 package edu.matc.movieCalendar.util;
 
+import edu.matc.movieCalendar.entity.Reminders;
+import edu.matc.movieCalendar.persistence.RemindersDao;
 import org.apache.log4j.Logger;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 
 import java.io.IOException;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
@@ -19,6 +24,11 @@ public class ReminderJob implements org.quartz.Job {
     public void execute(JobExecutionContext context) throws JobExecutionException {
         //log.info("ReminderJob is executing");
 
+        RemindersDao remindersDao = new RemindersDao();
+
+        List<Reminders> reminders = remindersDao.getAllReminders();
+
+        allRemindersLoop(reminders);
         System.out.println("ReminderJob is executing");
 
         Properties props = new Properties();
@@ -48,6 +58,32 @@ public class ReminderJob implements org.quartz.Job {
             System.out.println("Email Sent");
         } catch (MessagingException me) {
             log.error("Error sending email", me);
+        }
+    }
+
+    public void allRemindersLoop(List<Reminders> allReminders) {
+
+        for (Reminders reminder: allReminders) {
+            MovieApiCalls movieApiCalls = new MovieApiCalls();
+            Movie movie = new Movie();
+
+            try {
+                movie = movieApiCalls.getMovieInfo(reminder.getMovieId());
+            } catch (IOException io) {
+                log.error("Error getting all reminders", io);
+            }
+
+            if (movie.getTheatricalRelease() == LocalDate.now().minusDays(reminder.getTheaterDaysBefore())) {
+                //TODO: Send email for theatrical release
+            }
+
+            if (movie.getDigitalRelease() == LocalDate.now().minusDays(reminder.getDigitalDaysBefore())) {
+                //TODO: Send email for digital release
+            }
+
+            if (movie.getPhysicalRelease() == LocalDate.now().minusDays(reminder.getPhysicalDaysBefore())) {
+                //TODO: Send email for physical release
+            }
         }
     }
 }
