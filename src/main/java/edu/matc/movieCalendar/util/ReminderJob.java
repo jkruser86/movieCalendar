@@ -1,7 +1,9 @@
 package edu.matc.movieCalendar.util;
 
 import edu.matc.movieCalendar.entity.Reminders;
+import edu.matc.movieCalendar.entity.User;
 import edu.matc.movieCalendar.persistence.RemindersDao;
+import edu.matc.movieCalendar.persistence.UserDao;
 import org.apache.log4j.Logger;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
@@ -20,6 +22,15 @@ public class ReminderJob implements org.quartz.Job {
     private final Logger log = Logger.getLogger(this.getClass());
     private final String username = "moviecalendarapp@gmail.com";
     private final String password = "movieCalendar";
+
+    private Properties properties = new Properties();
+
+    public ReminderJob() {
+        properties.put("mail.smtp.auth", "true");
+        properties.put("mail.smtp.starttls.enable", "true");
+        properties.put("mail.smtp.host", "smtp.gmail.com");
+        properties.put("mail.smtp.port", "587");
+    }
     
     public void execute(JobExecutionContext context) throws JobExecutionException {
         //log.info("ReminderJob is executing");
@@ -31,13 +42,13 @@ public class ReminderJob implements org.quartz.Job {
         allRemindersLoop(reminders);
         System.out.println("ReminderJob is executing");
 
-        Properties props = new Properties();
-        props.put("mail.smtp.auth", "true");
-        props.put("mail.smtp.starttls.enable", "true");
-        props.put("mail.smtp.host", "smtp.gmail.com");
-        props.put("mail.smtp.port", "587");
+        //properties.put("mail.smtp.auth", "true");
+        //properties.put("mail.smtp.starttls.enable", "true");
+        //properties.put("mail.smtp.host", "smtp.gmail.com");
+        //properties.put("mail.smtp.port", "587");
 
-        Session session = Session.getInstance(props,
+        /**
+        Session session = Session.getInstance(properties,
                 new javax.mail.Authenticator() {
                     @Override
                     protected PasswordAuthentication getPasswordAuthentication() {
@@ -58,7 +69,7 @@ public class ReminderJob implements org.quartz.Job {
             System.out.println("Email Sent");
         } catch (MessagingException me) {
             log.error("Error sending email", me);
-        }
+        }*/
     }
 
     public void allRemindersLoop(List<Reminders> allReminders) {
@@ -73,17 +84,70 @@ public class ReminderJob implements org.quartz.Job {
                 log.error("Error getting all reminders", io);
             }
 
-            if (movie.getTheatricalRelease() == LocalDate.now().minusDays(reminder.getTheaterDaysBefore())) {
-                //TODO: Send email for theatrical release
-            }
-
-            if (movie.getDigitalRelease() == LocalDate.now().minusDays(reminder.getDigitalDaysBefore())) {
-                //TODO: Send email for digital release
-            }
-
-            if (movie.getPhysicalRelease() == LocalDate.now().minusDays(reminder.getPhysicalDaysBefore())) {
-                //TODO: Send email for physical release
-            }
+            checkReminder(movie, reminder);
         }
+    }
+
+    public void checkReminder(Movie movie, Reminders reminder) {
+
+        if (movie.getTheatricalRelease() == LocalDate.now().minusDays(reminder.getTheaterDaysBefore())) {
+            //TODO: Send email for theatrical release
+            String message = "This is a friendly reminder from MovieCalendar that the movie " + movie.getTitle()
+                    + " is coming to theaters on " + movie.getTheatricalRelease();
+
+            sendReminder(reminder, message);
+        }
+
+        if (movie.getDigitalRelease() == LocalDate.now().minusDays(reminder.getDigitalDaysBefore())) {
+            //TODO: Send email for digital release
+
+            String message = "This is a friendly reminder from MovieCalendar that the movie " + movie.getTitle()
+                    + " is coming out on digital on " + movie.getDigitalRelease();
+            sendReminder(reminder, message);
+        }
+
+        if (movie.getPhysicalRelease() == LocalDate.now().minusDays(reminder.getPhysicalDaysBefore())) {
+            //TODO: Send email for physical release
+
+            String message = "This is a friendly reminder from MovieCalendar that the movie " + movie.getTitle()
+                    + " is coming out on physical on " + movie.getPhysicalRelease();
+            sendReminder(reminder, message);
+        }
+    }
+
+    public void sendReminder(Reminders reminder, String emailMessage) {
+
+        String userEmail = getEmailAddress(reminder.getUserName());
+
+        Session session = Session.getInstance(properties,
+                new javax.mail.Authenticator() {
+                    @Override
+                    protected PasswordAuthentication getPasswordAuthentication() {
+                        return new PasswordAuthentication(username, password);
+                    }
+                });
+
+        try {
+            Message message = new MimeMessage(session);
+            message.setFrom(new InternetAddress(username));
+            message.setRecipients(Message.RecipientType.TO,
+                    InternetAddress.parse(userEmail));
+            message.setSubject("Movie Reminder");
+            message.setText("Dear " + reminder.getUserName() + ", \n\n " + emailMessage);
+
+            Transport.send(message);
+
+            System.out.println("Email Sent");
+        } catch (MessagingException me) {
+            log.error("Error sending email", me);
+        }
+    }
+
+
+    public String getEmailAddress(String username) {
+        UserDao userDao = new UserDao();
+        User user = userDao.getUser(username);
+
+        return user.getUserEmail();
     }
 }
