@@ -33,11 +33,12 @@ public class MovieSaveServlet extends HttpServlet {
         reminders.setMovieId(movieId);
         reminders.setUserName(req.getRemoteUser());
 
+        System.out.println("theaterTimeframe: " + theaterTimeframe);
         //Add theater reminder
         if (theaterTimeframe != "" && theaterNumber != "") {
-            if (theaterTimeframe == "Day") {
+            if (theaterTimeframe.equals("Day")) {
                 reminders.setTheaterDaysBefore(Integer.parseInt(theaterNumber));
-            } else if (theaterTimeframe == "Week") {
+            } else if (theaterTimeframe.equals("Week")) {
                 reminders.setTheaterDaysBefore(Integer.parseInt(theaterNumber) * 7);
             } else {
                 reminders.setTheaterDaysBefore(Integer.parseInt(theaterNumber) * 30);
@@ -46,9 +47,9 @@ public class MovieSaveServlet extends HttpServlet {
 
         //Add digital reminder
         if (digitalTimeframe != "" && digitalNumber != "") {
-            if (digitalTimeframe == "Day") {
+            if (digitalTimeframe.equals("Day")) {
                 reminders.setDigitalDaysBefore(Integer.parseInt(digitalNumber));
-            } else if (digitalTimeframe == "Week") {
+            } else if (digitalTimeframe.equals("Week")) {
                 reminders.setDigitalDaysBefore(Integer.parseInt(digitalNumber) * 7);
             } else {
                 reminders.setDigitalDaysBefore(Integer.parseInt(digitalNumber) * 30);
@@ -57,9 +58,9 @@ public class MovieSaveServlet extends HttpServlet {
 
         //Add physical reminder
         if (physicalTimeframe != "" && physicalNumber != "") {
-            if (physicalTimeframe == "Day") {
+            if (physicalTimeframe.equals("Day")) {
                 reminders.setPhysicalDaysBefore(Integer.parseInt(physicalNumber));
-            } else if (physicalTimeframe == "Week") {
+            } else if (physicalTimeframe.equals("Week")) {
                 reminders.setPhysicalDaysBefore(Integer.parseInt(physicalNumber) * 7);
             } else {
                 reminders.setPhysicalDaysBefore(Integer.parseInt(physicalNumber) * 30);

@@ -51,7 +51,7 @@ public class QuartzStartServlet extends HttpServlet {
         Trigger trigger = newTrigger()
                 .withIdentity("trigger1", "group1")
                 .startNow()
-                .withSchedule(simpleSchedule().withIntervalInSeconds(40).repeatForever())
+                .withSchedule(simpleSchedule().withIntervalInHours(24).repeatForever())
                 .build();
 
         scheduler.scheduleJob(quartzJob, trigger);
