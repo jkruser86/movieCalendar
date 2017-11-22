@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.time.LocalDate;
 
 import static org.quartz.JobBuilder.newJob;
 import static org.quartz.SimpleScheduleBuilder.simpleSchedule;
@@ -36,6 +37,7 @@ public class QuartzStartServlet extends HttpServlet {
             log.error("Error starting Quartz", e);
         }
 
+        req.setAttribute("date", LocalDate.now());
         String url = "/quartz-success.jsp";
         RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(url);
 
@@ -51,7 +53,7 @@ public class QuartzStartServlet extends HttpServlet {
         Trigger trigger = newTrigger()
                 .withIdentity("trigger1", "group1")
                 .startNow()
-                .withSchedule(simpleSchedule().withIntervalInHours(24).repeatForever())
+                .withSchedule(simpleSchedule().withIntervalInHours(12).repeatForever())
                 .build();
 
         scheduler.scheduleJob(quartzJob, trigger);

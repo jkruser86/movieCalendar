@@ -71,3 +71,6 @@
 | 11/16/17 | Worked on getting Quartz Scheduler into project | 3 hours | Works locally but doesn't appear to be working on AWS |
 | 11/17/17 | Added email functionality and got Quartz working on AWS | 2 hours | |
 | 11/18/17 | Cleaned up the code a bit and continued working on email functionality | 2 hours | |
+| 11/19/17 | Got email functionality working locally and somewhat in AWS | 2 hours | |
+| 11/20/17 | My computer was having issues so I worked on getting those fixed | 3 hours | |
+| 11/21/17 | Got email functionality fully working both locally and on AWS | 4 hours | |
