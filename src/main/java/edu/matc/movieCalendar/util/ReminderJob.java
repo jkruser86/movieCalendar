@@ -45,10 +45,11 @@ public class ReminderJob implements org.quartz.Job {
         //properties.put("mail.smtp.auth", "true");
         //properties.put("mail.smtp.starttls.enable", "true");
         //properties.put("mail.smtp.host", "smtp.gmail.com");
+        //properties.put("mail.smtp.port", "465");
         //properties.put("mail.smtp.port", "587");
 
-        /**
-        Session session = Session.getInstance(properties,
+
+        /**Session session = Session.getInstance(properties,
                 new javax.mail.Authenticator() {
                     @Override
                     protected PasswordAuthentication getPasswordAuthentication() {
@@ -69,7 +70,7 @@ public class ReminderJob implements org.quartz.Job {
             System.out.println("Email Sent");
         } catch (MessagingException me) {
             log.error("Error sending email", me);
-        }*/
+        } */
     }
 
     public void allRemindersLoop(List<Reminders> allReminders) {
@@ -90,7 +91,13 @@ public class ReminderJob implements org.quartz.Job {
 
     public void checkReminder(Movie movie, Reminders reminder) {
 
-        if (movie.getTheatricalRelease() == LocalDate.now().minusDays(reminder.getTheaterDaysBefore())) {
+        //Test!!!
+        System.out.println("movie release date: " + movie.getTheatricalRelease());
+        System.out.println("number of days before: " + reminder.getTheaterDaysBefore());
+        System.out.println("now minus days before: " + movie.getTheatricalRelease().minusDays(reminder.getTheaterDaysBefore()));
+
+
+        if (LocalDate.now().equals(movie.getTheatricalRelease().minusDays(reminder.getTheaterDaysBefore()))) {
             //TODO: Send email for theatrical release
             String message = "This is a friendly reminder from MovieCalendar that the movie " + movie.getTitle()
                     + " is coming to theaters on " + movie.getTheatricalRelease();
@@ -98,7 +105,7 @@ public class ReminderJob implements org.quartz.Job {
             sendReminder(reminder, message);
         }
 
-        if (movie.getDigitalRelease() == LocalDate.now().minusDays(reminder.getDigitalDaysBefore())) {
+        if (LocalDate.now().equals(movie.getDigitalRelease().minusDays(reminder.getDigitalDaysBefore()))) {
             //TODO: Send email for digital release
 
             String message = "This is a friendly reminder from MovieCalendar that the movie " + movie.getTitle()
@@ -106,7 +113,7 @@ public class ReminderJob implements org.quartz.Job {
             sendReminder(reminder, message);
         }
 
-        if (movie.getPhysicalRelease() == LocalDate.now().minusDays(reminder.getPhysicalDaysBefore())) {
+        if (LocalDate.now().equals(movie.getPhysicalRelease().minusDays(reminder.getPhysicalDaysBefore()))) {
             //TODO: Send email for physical release
 
             String message = "This is a friendly reminder from MovieCalendar that the movie " + movie.getTitle()
