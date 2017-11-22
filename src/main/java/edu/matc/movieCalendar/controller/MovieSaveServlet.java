@@ -33,9 +33,10 @@ public class MovieSaveServlet extends HttpServlet {
         reminders.setMovieId(movieId);
         reminders.setUserName(req.getRemoteUser());
 
-        System.out.println("theaterTimeframe: " + theaterTimeframe);
         //Add theater reminder
-        if (theaterTimeframe != "" && theaterNumber != "") {
+        if (theaterNumber == "") {
+            reminders.setTheaterDaysBefore(-1);
+        } else {
             if (theaterTimeframe.equals("Day")) {
                 reminders.setTheaterDaysBefore(Integer.parseInt(theaterNumber));
             } else if (theaterTimeframe.equals("Week")) {
@@ -46,7 +47,9 @@ public class MovieSaveServlet extends HttpServlet {
         }
 
         //Add digital reminder
-        if (digitalTimeframe != "" && digitalNumber != "") {
+        if (digitalNumber == "") {
+            reminders.setDigitalDaysBefore(-1);
+        } else {
             if (digitalTimeframe.equals("Day")) {
                 reminders.setDigitalDaysBefore(Integer.parseInt(digitalNumber));
             } else if (digitalTimeframe.equals("Week")) {
@@ -57,7 +60,9 @@ public class MovieSaveServlet extends HttpServlet {
         }
 
         //Add physical reminder
-        if (physicalTimeframe != "" && physicalNumber != "") {
+        if (physicalNumber == "") {
+            reminders.setPhysicalDaysBefore(-1);
+        } else {
             if (physicalTimeframe.equals("Day")) {
                 reminders.setPhysicalDaysBefore(Integer.parseInt(physicalNumber));
             } else if (physicalTimeframe.equals("Week")) {

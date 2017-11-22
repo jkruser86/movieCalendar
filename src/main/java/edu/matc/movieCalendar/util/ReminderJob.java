@@ -97,28 +97,35 @@ public class ReminderJob implements org.quartz.Job {
         System.out.println("now minus days before: " + movie.getTheatricalRelease().minusDays(reminder.getTheaterDaysBefore()));
 
 
-        if (LocalDate.now().equals(movie.getTheatricalRelease().minusDays(reminder.getTheaterDaysBefore()))) {
-            //TODO: Send email for theatrical release
-            String message = "This is a friendly reminder from MovieCalendar that the movie " + movie.getTitle()
-                    + " is coming to theaters on " + movie.getTheatricalRelease();
+        if (reminder.getTheaterDaysBefore() >= 0) {
+            if (LocalDate.now().equals(movie.getTheatricalRelease().minusDays(reminder.getTheaterDaysBefore()))) {
+                //TODO: Send email for theatrical release
+                String message = "This is a friendly reminder from MovieCalendar that the movie " + movie.getTitle()
+                        + " is coming to theaters on " + movie.getTheatricalRelease();
 
-            sendReminder(reminder, message);
+                sendReminder(reminder, message);
+            }
         }
 
-        if (LocalDate.now().equals(movie.getDigitalRelease().minusDays(reminder.getDigitalDaysBefore()))) {
-            //TODO: Send email for digital release
+        if (reminder.getDigitalDaysBefore() >= 0) {
+            if (LocalDate.now().equals(movie.getDigitalRelease().minusDays(reminder.getDigitalDaysBefore()))) {
+                //TODO: Send email for digital release
 
-            String message = "This is a friendly reminder from MovieCalendar that the movie " + movie.getTitle()
-                    + " is coming out on digital on " + movie.getDigitalRelease();
-            sendReminder(reminder, message);
+                String message = "This is a friendly reminder from MovieCalendar that the movie " + movie.getTitle()
+                        + " is coming out on digital on " + movie.getDigitalRelease();
+                sendReminder(reminder, message);
+            }
+
         }
 
-        if (LocalDate.now().equals(movie.getPhysicalRelease().minusDays(reminder.getPhysicalDaysBefore()))) {
-            //TODO: Send email for physical release
+        if (reminder.getPhysicalDaysBefore() >= 0) {
+            if (LocalDate.now().equals(movie.getPhysicalRelease().minusDays(reminder.getPhysicalDaysBefore()))) {
+                //TODO: Send email for physical release
 
-            String message = "This is a friendly reminder from MovieCalendar that the movie " + movie.getTitle()
-                    + " is coming out on physical on " + movie.getPhysicalRelease();
-            sendReminder(reminder, message);
+                String message = "This is a friendly reminder from MovieCalendar that the movie " + movie.getTitle()
+                        + " is coming out on physical on " + movie.getPhysicalRelease();
+                sendReminder(reminder, message);
+            }
         }
     }
 
