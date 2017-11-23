@@ -52,6 +52,8 @@ public class CreateUserSubmitServlet extends HttpServlet {
 
             userRolesDao.addUserRoles(userRoles);
 
+            req.login(userName, password);
+
             HttpSession session = req.getSession();
             session.setAttribute("userSignup","Thanks for signing up. Please sign in to your account");
             resp.sendRedirect("account");
