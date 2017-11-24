@@ -4,12 +4,16 @@ import edu.matc.movieCalendar.entity.Reminders;
 import org.apache.log4j.Logger;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * This class handles the database functionality for the reminders table
+ *
+ * @author Jamie Kruser
+ */
 public class RemindersDao {
 
     private final Logger log = Logger.getLogger(this.getClass());

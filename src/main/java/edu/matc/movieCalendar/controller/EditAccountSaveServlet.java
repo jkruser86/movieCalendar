@@ -11,6 +11,11 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
+/**
+ * The servlet that handles the saving for the account after editing for movieCalendar
+ *
+ * @author Jamie Kruser
+ */
 @WebServlet (
         name = "saveEdit",
         urlPatterns = {"/saveEdit"}
@@ -20,6 +25,14 @@ public class EditAccountSaveServlet extends HttpServlet {
     private User user;
     private UserDao userDao;
 
+    /**
+     * The doPost for the account edit save servlet
+     *
+     * @param req the request for the servlet
+     * @param resp the response for the servlet
+     * @throws ServletException  handles the ServletException
+     * @throws IOException handles the IOException
+     */
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         user = new User();

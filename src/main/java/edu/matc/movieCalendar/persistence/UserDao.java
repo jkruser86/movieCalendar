@@ -3,14 +3,15 @@ package edu.matc.movieCalendar.persistence;
 import edu.matc.movieCalendar.entity.*;
 import org.apache.log4j.Logger;
 import org.hibernate.*;
-import org.hibernate.criterion.Restrictions;
-
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
 
 
 import java.util.*;
 
+/**
+ * This class does the database functionality for the user table
+ *
+ * @author Jamie Kruser
+ */
 public class UserDao {
     private final Logger log = Logger.getLogger(this.getClass());
 
@@ -125,6 +126,11 @@ public class UserDao {
         }
     }
 
+    /**
+     * Updates the user table with the passed in user
+     *
+     * @param user the user to update
+     */
     public void updateUser(User user) {
         Session session = null;
         Transaction transaction = null;

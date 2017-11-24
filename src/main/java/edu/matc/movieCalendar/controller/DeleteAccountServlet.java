@@ -11,11 +11,25 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
+/**
+ * The servlet that handles the delete account for movieCalendar
+ *
+ * @author Jamie Kruser
+ */
 @WebServlet(
         name = "deleteAcct",
         urlPatterns = {"/deleteAcct"}
 )
 public class DeleteAccountServlet extends HttpServlet {
+
+    /**
+     * The doGet for the delete account servlet
+     *
+     * @param req the request for the servlet
+     * @param resp the response for the servlet
+     * @throws ServletException  handles the ServletException
+     * @throws IOException handles the IOException
+     */
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         UserDao dao = new UserDao();

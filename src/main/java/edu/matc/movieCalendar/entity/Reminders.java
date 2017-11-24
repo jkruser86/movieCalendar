@@ -2,6 +2,11 @@ package edu.matc.movieCalendar.entity;
 
 import javax.persistence.*;
 
+/**
+ * This is the hibernate entity class for the reminders table
+ *
+ * @author Jamie Kruser
+ */
 @Entity
 @IdClass(RemindersPK.class)
 @Table(name = "reminders")
@@ -12,26 +17,50 @@ public class Reminders {
     private int digitalDaysBefore;
     private int physicalDaysBefore;
 
+    /**
+     * Gets the user_name field from the reminders table
+     *
+     * @return the user_name
+     */
     @Id
     @Column(name = "user_name", nullable = false, length = 15)
     public String getUserName() {
         return userName;
     }
 
+    /**
+     * Sets the local userName variable
+     *
+     * @param userName the value to set the local userName variable
+     */
     public void setUserName(String userName) {
         this.userName = userName;
     }
 
+    /**
+     * Gets the movie_id field from the reminders table
+     *
+     * @return the movie_id
+     */
     @Id
     @Column(name = "movie_id", nullable = false)
     public int getMovieId() {
         return movieId;
     }
 
+    /**
+     * Sets the local movieId variable
+     *
+     * @param movieId the value to set the local movieId variable
+     */
     public void setMovieId(int movieId) {
         this.movieId = movieId;
     }
 
+    /**
+     * Gets the theater_days_before field from the reminders table
+     * @return
+     */
     @Basic
     @Column(name = "theater_days_before", nullable = false)
     public int getTheaterDaysBefore() {

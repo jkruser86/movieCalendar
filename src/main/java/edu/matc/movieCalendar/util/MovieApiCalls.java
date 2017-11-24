@@ -13,15 +13,28 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Does all the calls to the themoviedb api
+ *
+ * @author Jamie Kruser
+ */
 public class MovieApiCalls {
 
     private final String apiKey = "25363f0be2ee0fc2fd2e9caa793b33f4";
     private final String dateTimeFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'";
 
-    public MovieApiCalls() {
+    /**
+     * Generic class constructor
+     */
+    public MovieApiCalls() {}
 
-    }
-
+    /**
+     * Calls the api using a search term and returns all movie results
+     *
+     * @param term the term to search for
+     * @return all results from the api call for the searched term
+     * @throws IOException handles the IOException from the api call
+     */
     public List<MovieResultsItem> getAllResults(String term) throws IOException {
         Client client = ClientBuilder.newClient();
         WebTarget target =
@@ -34,6 +47,13 @@ public class MovieApiCalls {
         return results.getResults();
     }
 
+    /**
+     * Calls the api using the movie id and returns the movie info
+     *
+     * @param id the movie id to use for the api call
+     * @return the movie info
+     * @throws IOException handles the IOException from the api call
+     */
     public Movie getMovieInfo(int id) throws IOException {
         Client client = ClientBuilder.newClient();
         WebTarget target =

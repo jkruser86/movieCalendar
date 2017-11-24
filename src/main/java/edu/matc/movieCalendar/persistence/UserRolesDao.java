@@ -9,6 +9,11 @@ import org.hibernate.Transaction;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * This class handles the database functionality for the userRoles table
+ *
+ * @author Jamie Kruser
+ */
 public class UserRolesDao {
     private final Logger log = Logger.getLogger(this.getClass());
 

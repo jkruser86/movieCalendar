@@ -10,11 +10,25 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+/**
+ * The servlet that handles the account page for movieCalendar
+ *
+ * @author Jamie Kruser
+ */
 @WebServlet(
         name = "account",
         urlPatterns = {"/account"}
 )
 public class AccountServlet extends HttpServlet {
+
+    /**
+     * The doGet for the account servlet
+     *
+     * @param req the request for the servlet
+     * @param resp the response for the servlet
+     * @throws ServletException  handles the ServletException
+     * @throws IOException handles the IOException
+     */
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 

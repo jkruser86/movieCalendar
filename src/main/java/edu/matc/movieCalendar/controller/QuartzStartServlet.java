@@ -20,6 +20,11 @@ import static org.quartz.JobBuilder.newJob;
 import static org.quartz.SimpleScheduleBuilder.simpleSchedule;
 import static org.quartz.TriggerBuilder.newTrigger;
 
+/**
+ * This servlet handles the starting of the Quartz scheduler for movieCalendar
+ *
+ * @author Jamie Kruser
+ */
 @WebServlet(
         name = "quartzStart",
         urlPatterns = {"/quartzStart"}
@@ -28,6 +33,14 @@ public class QuartzStartServlet extends HttpServlet {
 
     private final Logger log = Logger.getLogger(this.getClass());
 
+    /**
+     * The doGet for the Quartz start servlet
+     *
+     * @param req the request for the servlet
+     * @param resp the response for the servlet
+     * @throws ServletException  handles the ServletException
+     * @throws IOException handles the IOException
+     */
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
@@ -44,7 +57,12 @@ public class QuartzStartServlet extends HttpServlet {
         dispatcher.forward(req, resp);
     }
 
-    protected void startQuartz() throws Exception {
+    /**
+     * Starts the Quartz schedule to run every hour
+     *
+     * @throws Exception handles generic exception
+     */
+    private void startQuartz() throws Exception {
         Scheduler scheduler = StdSchedulerFactory.getDefaultScheduler();
         scheduler.start();
 

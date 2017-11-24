@@ -3,12 +3,16 @@ package edu.matc.movieCalendar.controller;
 import edu.matc.movieCalendar.entity.*;
 import edu.matc.movieCalendar.persistence.*;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 import java.io.IOException;
 
+/**
+ * The servlet that handles the create user submission
+ *
+ * @author Jamie Kruser
+ */
 @WebServlet (
         name = "submit",
         urlPatterns = {"/submit"}
@@ -20,6 +24,14 @@ public class CreateUserSubmitServlet extends HttpServlet {
     private UserDao userDao;
     private UserRolesDao userRolesDao;
 
+    /**
+     * The doPost for the create user submit servlet
+     *
+     * @param req the request for the servlet
+     * @param resp the response for the servlet
+     * @throws ServletException  handles the ServletException
+     * @throws IOException handles the IOException
+     */
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
