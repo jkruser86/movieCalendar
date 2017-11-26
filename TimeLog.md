@@ -75,3 +75,5 @@
 | 11/20/17 | My computer was having issues so I worked on getting those fixed | 3 hours | |
 | 11/21/17 | Got email functionality fully working both locally and on AWS | 4 hours | |
 | 11/22/17 | Cleaned up some code in the jsps | 1 hour | |
+| 11/23/17 | Started adding javadoc to most of the classes | 2 hours | Still need to add javadoc to the api classes and entities |
+

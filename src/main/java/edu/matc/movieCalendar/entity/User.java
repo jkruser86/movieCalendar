@@ -1,16 +1,37 @@
 package edu.matc.movieCalendar.entity;
 
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
+
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "user")
-public class User {
-    private String userName;
-    private String userPass;
-    private String userEmail;
+public class User implements java.io.Serializable {
 
     @Id
     @Column(name = "user_name", nullable = false, length = 15)
+    private String userName;
+
+    @Basic
+    @Column(name = "user_pass", nullable = false, length = 15)
+    private String userPass;
+
+    @Basic
+    @Column(name = "user_email", nullable = false, length = 60)
+    private String userEmail;
+
+    @OneToMany(mappedBy = "user")
+    @Cascade({CascadeType.SAVE_UPDATE, CascadeType.DELETE})
+    private Set<UserRoles> userRoles = new HashSet<UserRoles>(0);
+
+    @OneToMany(mappedBy = "user", orphanRemoval = true)
+    @Cascade({CascadeType.SAVE_UPDATE, CascadeType.DELETE})
+    private Set<Reminders> reminders = new HashSet<Reminders>(0);
+
+
     public String getUserName() {
         return userName;
     }
@@ -19,8 +40,6 @@ public class User {
         this.userName = userName;
     }
 
-    @Basic
-    @Column(name = "user_pass", nullable = false, length = 15)
     public String getUserPass() {
         return userPass;
     }
@@ -29,14 +48,28 @@ public class User {
         this.userPass = userPass;
     }
 
-    @Basic
-    @Column(name = "user_email", nullable = false, length = 60)
     public String getUserEmail() {
         return userEmail;
     }
 
     public void setUserEmail(String userEmail) {
         this.userEmail = userEmail;
+    }
+
+    public Set<UserRoles> getUserRoles() {
+        return userRoles;
+    }
+
+    public void setUserRoles(Set<UserRoles> userRoles) {
+        this.userRoles = userRoles;
+    }
+
+    public Set<Reminders> getReminders() {
+        return reminders;
+    }
+
+    public void setReminders(Set<Reminders> reminders) {
+        this.reminders = reminders;
     }
 
     @Override

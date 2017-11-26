@@ -1,7 +1,10 @@
 package edu.matc.movieCalendar.controller;
 
 import edu.matc.movieCalendar.entity.Reminders;
-import edu.matc.movieCalendar.persistence.RemindersDao;
+import edu.matc.movieCalendar.entity.User;
+import edu.matc.movieCalendar.persistence.UserDao;
+import org.apache.log4j.Logger;
+import org.hibernate.HibernateException;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -21,6 +24,8 @@ import java.io.IOException;
 )
 public class MovieSaveServlet extends HttpServlet {
 
+    private final Logger log = Logger.getLogger(this.getClass());
+
     /**
      * The doPost which will save the movie for the user
      *
@@ -33,7 +38,6 @@ public class MovieSaveServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         Reminders reminders = new Reminders();
-        RemindersDao remindersDao = new RemindersDao();
         int movieId = Integer.parseInt(req.getParameter("movie_id"));
         String theaterNumber = req.getParameter("theater_number");
         String theaterTimeframe = req.getParameter("theater_timeframe");
@@ -41,10 +45,10 @@ public class MovieSaveServlet extends HttpServlet {
         String digitalTimeframe = req.getParameter("digital_timeframe");
         String physicalNumber = req.getParameter("physical_number");
         String physicalTimeframe = req.getParameter("physical_timeframe");
-        System.out.println(movieId);
+
+        String userName = req.getRemoteUser();
 
         reminders.setMovieId(movieId);
-        reminders.setUserName(req.getRemoteUser());
 
         //Add theater reminder
         if (theaterNumber == "") {
@@ -85,6 +89,14 @@ public class MovieSaveServlet extends HttpServlet {
             }
         }
 
-        remindersDao.addReminder(reminders);
+        try {
+            UserDao userDao = new UserDao();
+            User user = userDao.getUser(userName);
+            reminders.setUser(user);
+            user.getReminders().add(reminders);
+            userDao.updateUser(user);
+        } catch (HibernateException he) {
+            log.error("Error while saving reminder", he);
+        }
     }
 }

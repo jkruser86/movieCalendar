@@ -22,7 +22,6 @@ public class CreateUserSubmitServlet extends HttpServlet {
     private User user;
     private UserRoles userRoles;
     private UserDao userDao;
-    private UserRolesDao userRolesDao;
 
     /**
      * The doPost for the create user submit servlet
@@ -38,7 +37,6 @@ public class CreateUserSubmitServlet extends HttpServlet {
         user = null;
         userRoles = new UserRoles();
         userDao = new UserDao();
-        userRolesDao = new UserRolesDao();
 
         String userName = req.getParameter("userName");
         String password = req.getParameter("password");
@@ -57,12 +55,12 @@ public class CreateUserSubmitServlet extends HttpServlet {
             user.setUserPass(password);
             user.setUserEmail(email);
 
-            userDao.addUser(user);
-
-            userRoles.setUserName(userName);
             userRoles.setRoleName("user");
+            userRoles.setUser(user);
 
-            userRolesDao.addUserRoles(userRoles);
+            user.getUserRoles().add(userRoles);
+
+            userDao.addUser(user);
 
             req.login(userName, password);
 

@@ -4,29 +4,30 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "user_roles")
-public class UserRoles {
-    private String userName;
+public class UserRoles implements java.io.Serializable {
+
+    @Column(name = "role_name", nullable = false, length = 15)
     private String roleName;
-    private User userByUserName;
 
     @Id
-    @Column(name = "user_name", nullable = false, length = 15)
-    public String getUserName() {
-        return userName;
-    }
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "user_name", referencedColumnName = "user_name", nullable = false)
+    private User user;
 
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-
-    @Basic
-    @Column(name = "role_name", nullable = false, length = 15)
     public String getRoleName() {
         return roleName;
     }
 
     public void setRoleName(String roleName) {
         this.roleName = roleName;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     @Override
@@ -36,27 +37,10 @@ public class UserRoles {
 
         UserRoles userRoles = (UserRoles) o;
 
-        if (userName != null ? !userName.equals(userRoles.userName) : userRoles.userName != null) return false;
+        //if (userName != null ? !userName.equals(userRoles.userName) : userRoles.userName != null) return false;
         if (roleName != null ? !roleName.equals(userRoles.roleName) : userRoles.roleName != null) return false;
+        if (user != null ? !user.equals(userRoles.user) : userRoles.user != null) return false;
 
         return true;
     }
-
-    @Override
-    public int hashCode() {
-        int result = userName != null ? userName.hashCode() : 0;
-        result = 31 * result + (roleName != null ? roleName.hashCode() : 0);
-        return result;
-    }
-
-    /**
-    @OneToOne
-    @JoinColumn(name = "user_name", referencedColumnName = "user_name", nullable = false)
-    public User getUserByUserName() {
-        return userByUserName;
-    }
-
-    public void setUserByUserName(User userByUserName) {
-        this.userByUserName = userByUserName;
-     } */
 }

@@ -2,7 +2,6 @@ package edu.matc.movieCalendar.util;
 
 import edu.matc.movieCalendar.entity.Reminders;
 import edu.matc.movieCalendar.entity.User;
-import edu.matc.movieCalendar.persistence.RemindersDao;
 import edu.matc.movieCalendar.persistence.UserDao;
 import org.apache.log4j.Logger;
 import org.quartz.JobExecutionContext;
@@ -52,32 +51,33 @@ public class ReminderJob implements org.quartz.Job {
     public void execute(JobExecutionContext context) throws JobExecutionException {
         //log.info("ReminderJob is executing");
 
-        RemindersDao remindersDao = new RemindersDao();
+        UserDao userDao = new UserDao();
+        List<User> users = userDao.getAllUsers();
 
-        List<Reminders> reminders = remindersDao.getAllReminders();
-
-        allRemindersLoop(reminders);
+        allRemindersLoop(users);
 
     }
 
     /**
      * Loops through the list of reminders for any that are ready to be sent
      *
-     * @param allReminders a list of reminders to search for
+     * @param allUsers a list of reminders to search for
      */
-    public void allRemindersLoop(List<Reminders> allReminders) {
+    public void allRemindersLoop(List<User> allUsers) {
 
-        for (Reminders reminder: allReminders) {
-            MovieApiCalls movieApiCalls = new MovieApiCalls();
-            Movie movie = new Movie();
+        for (User user: allUsers) {
+            for (Reminders reminder: user.getReminders()) {
+                MovieApiCalls movieApiCalls = new MovieApiCalls();
+                Movie movie = new Movie();
 
-            try {
-                movie = movieApiCalls.getMovieInfo(reminder.getMovieId());
-            } catch (IOException io) {
-                log.error("Error getting all reminders", io);
+                try {
+                    movie = movieApiCalls.getMovieInfo(reminder.getMovieId());
+                } catch (IOException io) {
+                    log.error("Error getting all reminders", io);
+                }
+
+                checkReminder(movie, reminder);
             }
-
-            checkReminder(movie, reminder);
         }
     }
 
@@ -89,32 +89,32 @@ public class ReminderJob implements org.quartz.Job {
      */
     public void checkReminder(Movie movie, Reminders reminder) {
 
-        if (reminder.getTheaterDaysBefore() >= 0) {
+        if (reminder.getTheaterDaysBefore() >= 0 && movie.getTheatricalRelease() != null) {
             if (LocalDate.now().equals(movie.getTheatricalRelease().minusDays(reminder.getTheaterDaysBefore()))) {
 
                 String message = "This is a friendly reminder from MovieCalendar that the movie " + movie.getTitle()
                         + " is coming to theaters on " + movie.getTheatricalRelease();
 
-                sendReminder(reminder.getUserName(), message);
+                sendReminder(reminder.getUser().getUserName(), message);
             }
         }
 
-        if (reminder.getDigitalDaysBefore() >= 0) {
+        if (reminder.getDigitalDaysBefore() >= 0 && movie.getDigitalRelease() != null) {
             if (LocalDate.now().equals(movie.getDigitalRelease().minusDays(reminder.getDigitalDaysBefore()))) {
 
                 String message = "This is a friendly reminder from MovieCalendar that the movie " + movie.getTitle()
                         + " is coming out on digital on " + movie.getDigitalRelease();
-                sendReminder(reminder.getUserName(), message);
+                sendReminder(reminder.getUser().getUserName(), message);
             }
 
         }
 
-        if (reminder.getPhysicalDaysBefore() >= 0) {
+        if (reminder.getPhysicalDaysBefore() >= 0 && movie.getPhysicalRelease() != null) {
             if (LocalDate.now().equals(movie.getPhysicalRelease().minusDays(reminder.getPhysicalDaysBefore()))) {
 
                 String message = "This is a friendly reminder from MovieCalendar that the movie " + movie.getTitle()
                         + " is coming out on physical on " + movie.getPhysicalRelease();
-                sendReminder(reminder.getUserName(), message);
+                sendReminder(reminder.getUser().getUserName(), message);
             }
         }
     }

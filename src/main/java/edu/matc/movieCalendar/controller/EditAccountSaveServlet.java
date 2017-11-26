@@ -42,7 +42,7 @@ public class EditAccountSaveServlet extends HttpServlet {
         String password = req.getParameter("password");
         String email = req.getParameter("email");
 
-        user.setUserName(userName);
+        user = userDao.getUser(userName);
         user.setUserPass(password);
         user.setUserEmail(email);
 

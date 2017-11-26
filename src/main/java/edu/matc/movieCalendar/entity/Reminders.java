@@ -8,42 +8,32 @@ import javax.persistence.*;
  * @author Jamie Kruser
  */
 @Entity
-@IdClass(RemindersPK.class)
 @Table(name = "reminders")
-public class Reminders {
-    private String userName;
+public class Reminders implements java.io.Serializable {
+
+    @Id
+    @Column(name = "movie_id", nullable = false)
     private int movieId;
+
+    @Column(name = "theater_days_before", nullable = false)
     private int theaterDaysBefore;
+
+    @Column(name = "digital_days_before", nullable = false)
     private int digitalDaysBefore;
+
+    @Column(name = "physical_days_before", nullable = false)
     private int physicalDaysBefore;
 
-    /**
-     * Gets the user_name field from the reminders table
-     *
-     * @return the user_name
-     */
     @Id
-    @Column(name = "user_name", nullable = false, length = 15)
-    public String getUserName() {
-        return userName;
-    }
-
-    /**
-     * Sets the local userName variable
-     *
-     * @param userName the value to set the local userName variable
-     */
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name="user_name", referencedColumnName = "user_name", nullable = false)
+    private User user;
 
     /**
      * Gets the movie_id field from the reminders table
      *
      * @return the movie_id
      */
-    @Id
-    @Column(name = "movie_id", nullable = false)
     public int getMovieId() {
         return movieId;
     }
@@ -61,8 +51,6 @@ public class Reminders {
      * Gets the theater_days_before field from the reminders table
      * @return
      */
-    @Basic
-    @Column(name = "theater_days_before", nullable = false)
     public int getTheaterDaysBefore() {
         return theaterDaysBefore;
     }
@@ -71,8 +59,6 @@ public class Reminders {
         this.theaterDaysBefore = theaterDaysBefore;
     }
 
-    @Basic
-    @Column(name = "digital_days_before", nullable = false)
     public int getDigitalDaysBefore() {
         return digitalDaysBefore;
     }
@@ -81,14 +67,20 @@ public class Reminders {
         this.digitalDaysBefore = digitalDaysBefore;
     }
 
-    @Basic
-    @Column(name = "physical_days_before", nullable = false)
     public int getPhysicalDaysBefore() {
         return physicalDaysBefore;
     }
 
     public void setPhysicalDaysBefore(int physicalDaysBefore) {
         this.physicalDaysBefore = physicalDaysBefore;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     @Override
@@ -102,18 +94,9 @@ public class Reminders {
         if (theaterDaysBefore != reminders.theaterDaysBefore) return false;
         if (digitalDaysBefore != reminders.digitalDaysBefore) return false;
         if (physicalDaysBefore != reminders.physicalDaysBefore) return false;
-        if (userName != null ? !userName.equals(reminders.userName) : reminders.userName != null) return false;
+        if (user != reminders.user) return false;
+        //if (userName != null ? !userName.equals(reminders.userName) : reminders.userName != null) return false;
 
         return true;
-    }
-
-    @Override
-    public int hashCode() {
-        int result = userName != null ? userName.hashCode() : 0;
-        result = 31 * result + movieId;
-        result = 31 * result + theaterDaysBefore;
-        result = 31 * result + digitalDaysBefore;
-        result = 31 * result + physicalDaysBefore;
-        return result;
     }
 }

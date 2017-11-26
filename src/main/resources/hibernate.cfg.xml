@@ -15,6 +15,7 @@
         <property name="connection.password">student</property>
         <!--<property name="connection.username">root</property>
         <property name="connection.password">uBUs4XoxU9UsEw</property>-->
+        <property name="hibernate.enable_lazy_load_no_trans">true</property>
 
         <!-- SQL dialect -->
         <property name="dialect">org.hibernate.dialect.MySQL5Dialect</property>
