@@ -76,4 +76,6 @@
 | 11/21/17 | Got email functionality fully working both locally and on AWS | 4 hours | |
 | 11/22/17 | Cleaned up some code in the jsps | 1 hour | |
 | 11/23/17 | Started adding javadoc to most of the classes | 2 hours | Still need to add javadoc to the api classes and entities |
-
+| 11/24/17 | Cleaned up some code and started playing with the hibernate functionality | 2 hours | |
+| 11/25/17 | Got hibernate cleaned up so that it would work with the parent/child relationships | 4 hours | |
+| 11/26/17 | Added reminder edit functionality to the page | 2 hours | |
