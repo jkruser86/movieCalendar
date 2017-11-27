@@ -24,7 +24,12 @@
 <br/>
 <FORM ACTION="editAccount" METHOD="POST">
     <TABLE>
-        <TR><TH><INPUT TYPE="SUBMIT" VALUE="Edit Account">
+        <TR><TH><INPUT TYPE="SUBMIT" VALUE="Edit Account"></TH></TR>
+    </TABLE>
+</FORM>
+<FORM ACTION="reminderList" METHOD="GET">
+    <TABLE>
+        <TR><TH><INPUT TYPE="SUBMIT" VALUE="Edit Reminders"></TH></TR>
     </TABLE>
 </FORM>
 <a href="deleteAcct">Click here to delete account</a>
