@@ -79,3 +79,6 @@
 | 11/24/17 | Cleaned up some code and started playing with the hibernate functionality | 2 hours | |
 | 11/25/17 | Got hibernate cleaned up so that it would work with the parent/child relationships | 4 hours | |
 | 11/26/17 | Added reminder edit functionality to the page | 2 hours | |
+| 11/27/17 | Worked on getting delete reminder functionality on the page | 2 hours | Struggled to get multiple buttons on form |
+| 11/28/17 | Completed the delete reminder functionality | 2 hours | Need to clean up the delete a bit yet |
+
