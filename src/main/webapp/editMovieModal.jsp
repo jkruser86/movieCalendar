@@ -89,7 +89,7 @@
                     <div class="row">
                         <div class="col-lg-2 col-lg-offset-2 col-md-2 col-md-offset-2 col-sm-2 col-sm-offset-2" style="padding-bottom: 10px;">
                             <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                            <button type="submit" class="btn btn-success" >Save </button>
+                            <button type="submit" class="btn btn-success">Save </button>
                         </div>
                     </div>
                 </form>

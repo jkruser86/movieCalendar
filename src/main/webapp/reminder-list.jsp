@@ -1,5 +1,5 @@
 <%@include file="taglib.jsp"%>
-<c:set var="pageTitle" value="Movie Calendar - Reminder List" />
+<c:set var="pageTitle" value="Movie Calendar - Edit Reminders" />
 <%@include file="head.jsp"%>
 
 <html>

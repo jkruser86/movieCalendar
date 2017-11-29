@@ -25,6 +25,8 @@ public class EditMovieSaveServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
+        System.out.println("Edit Servlet Running!");
+
         int movieId = Integer.parseInt(req.getParameter("movie_id"));
         String theaterNumber = req.getParameter("theater_number");
         String theaterTimeframe = req.getParameter("theater_timeframe");
@@ -87,10 +89,10 @@ public class EditMovieSaveServlet extends HttpServlet {
         }
 
         try {
-            //UserDao userDao = new UserDao();
-            //User user = userDao.getUser(userName);
             updateReminder.setUser(user);
+            //reminders.add(updateReminder);
             user.getReminders().add(updateReminder);
+            //user.setReminders(reminders);
             userDao.updateUser(user);
         } catch (HibernateException he) {
             log.error("Error while saving reminder", he);

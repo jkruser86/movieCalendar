@@ -55,6 +55,9 @@
                     <td>
                         <button type="button" id="${movie.id}" class="btnadd btn btn-xs btn-success"><span class="glyphicon glyphicon-edit"></span></button>
                     </td>
+                    <td>
+                        <button type="button" id="${movie.id}" class="btndel btn btn-xs btn-danger"><span class="glyphicon glyphicon-remove"></span></button>
+                    </td>
                 </tr>
             </c:forEach>
             </tbody>
@@ -62,4 +65,5 @@
     </div>
 
     <c:import url="editMovieModal.jsp" />
+    <c:import url="deleteMovieModal.jsp" />
 </div>
