@@ -9,5 +9,8 @@ $(document).on("submit", "#add_form", function(event) {
         btnadd.find('span').toggleClass('glyphicon-edit').toggleClass('glyphicon-check');
         btnadd.attr('disabled','disabled');
     });
+    $('#deleteMovieModal').on('hidden.bs.modal', function () {
+        location.reload();
+    })
     event.preventDefault();
 });
