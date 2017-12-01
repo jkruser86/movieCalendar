@@ -1,6 +1,8 @@
 package edu.matc.movieCalendar.controller;
 
 import edu.matc.movieCalendar.persistence.UserDao;
+import org.apache.log4j.Logger;
+import org.hibernate.HibernateException;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -21,6 +23,8 @@ import java.io.IOException;
 )
 public class AccountServlet extends HttpServlet {
 
+    private final Logger log = Logger.getLogger(this.getClass());
+
     /**
      * The doGet for the account servlet
      *
@@ -32,10 +36,16 @@ public class AccountServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        UserDao userDao = new UserDao();
+        String url;
+        try {
+            UserDao userDao = new UserDao();
+            req.setAttribute("user", userDao.getUser(req.getRemoteUser()));
+            url = "/account.jsp";
+        } catch (HibernateException he) {
+            log.error("Error while selecting user" + req.getRemoteUser(), he);
+            url = "/login-failure";
+        }
 
-        req.setAttribute("user", userDao.getUser(req.getRemoteUser()));
-        String url = "/account.jsp";
         RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(url);
 
         dispatcher.forward(req, resp);

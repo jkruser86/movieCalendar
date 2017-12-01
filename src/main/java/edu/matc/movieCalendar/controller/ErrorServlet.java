@@ -6,35 +6,21 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-/**
- * The servlet that handles the account creation page for movieCalendar
- *
- * @author Jamie Kruser
- */
 @WebServlet (
-        name = "create-acct",
-        urlPatterns = {"/create-acct"}
+        name = "errorPage",
+        urlPatterns = {"/errorPage"}
 )
-public class CreateUserServlet extends HttpServlet {
+public class ErrorServlet extends HttpServlet {
 
-    /**
-     * The doGet for the account creation servlet
-     *
-     * @param req the request for the servlet
-     * @param resp the response for the servlet
-     * @throws ServletException  handles the ServletException
-     * @throws IOException handles the IOException
-     */
+    //TODO: Setup error page on content-error.jsp
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String url = "/create-acct.jsp";
+        String url = "/content-error.jsp";
 
         RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(url);
-
         dispatcher.forward(req, resp);
-
     }
 }

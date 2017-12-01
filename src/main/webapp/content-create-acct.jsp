@@ -1,6 +1,19 @@
+<%@include file="taglib.jsp"%>
 <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
 <script src='http://cdnjs.cloudflare.com/ajax/libs/bootstrap-validator/0.4.5/js/bootstrapvalidator.min.js'></script>
 
+<c:choose>
+    <c:when test="${createUserError == 'username'}">
+        <div class="alert alert-danger">
+            <strong>User Exists!</strong> User name already exists. Please choose another user name.
+        </div>
+    </c:when>
+    <c:when test="${createUserError == 'email'}">
+        <div class="alert alert-danger">
+            <strong>Email Exists!</strong> Email already exists. Please use another email address.
+        </div>
+    </c:when>
+</c:choose>
 <div class="container">
     <form class="form-horizontal" action="submit" method="post" id="reg_form">
         <fieldset>
