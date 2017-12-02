@@ -20,6 +20,7 @@ import static org.quartz.JobBuilder.newJob;
 import static org.quartz.SimpleScheduleBuilder.simpleSchedule;
 import static org.quartz.TriggerBuilder.newTrigger;
 
+//TODO: Need to add error handling
 /**
  * This servlet handles the starting of the Quartz scheduler for movieCalendar
  *

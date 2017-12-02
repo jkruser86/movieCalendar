@@ -16,6 +16,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+//TODO: Need to add error handling
+//TODO: Add javadoc to doGet
 /**
  * The servlet that handles the processing of the user's reminders list
  *

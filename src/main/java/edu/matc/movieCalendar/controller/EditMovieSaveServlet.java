@@ -14,6 +14,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Set;
 
+//TODO: Need to add error handling
+//TODO: Add javadoc
 @WebServlet(
         name = "editSave",
         urlPatterns = {"/editSave"}
@@ -24,8 +26,6 @@ public class EditMovieSaveServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
-        System.out.println("Edit Servlet Running!");
 
         int movieId = Integer.parseInt(req.getParameter("movie_id"));
         String theaterNumber = req.getParameter("theater_number");

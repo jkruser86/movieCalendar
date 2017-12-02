@@ -2,6 +2,7 @@ package edu.matc.movieCalendar.entity;
 
 import javax.persistence.*;
 
+//TODO: Need to add javadoc
 /**
  * This is the hibernate entity class for the reminders table
  *

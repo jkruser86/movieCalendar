@@ -11,6 +11,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.Set;
 
@@ -24,13 +25,28 @@ public class DeleteReminderServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        System.out.println("Delete servlet running!");
 
         int movieId = Integer.parseInt(req.getParameter("movie_id"));
 
         UserDao userDao = new UserDao();
-        User user = userDao.getUser(req.getRemoteUser());
-        Set<Reminders> reminders = user.getReminders();
+        User user = new User();
+        Set<Reminders> reminders = null;
+        HttpSession session = req.getSession();
+        String userName = req.getRemoteUser();
+
+        try {
+            user = userDao.getUser(userName);
+            reminders = user.getReminders();
+        } catch (HibernateException he) {
+            log.error("Hibernate Exception gathering reminders for user " + userName, he);
+            session.setAttribute("error", "Error gathering reminders");
+            resp.sendRedirect("errorPage");
+        } catch (Exception e) {
+            log.error("Exception gathering reminders for user " + userName, e);
+            session.setAttribute("error", "Error gathering reminders");
+            resp.sendRedirect("errorPage");
+        }
+
         Reminders deleteReminder = new Reminders();
 
         for (Reminders reminder : reminders) {
@@ -45,7 +61,13 @@ public class DeleteReminderServlet extends HttpServlet {
             user.setReminders(reminders);
             userDao.updateUser(user);
         } catch (HibernateException he) {
-            log.error("Error deleting movie id: " + movieId, he);
+            log.error("HibernateException deleting movie id: " + movieId + " for user " + userName, he);
+            session.setAttribute("error", "Error deleting reminder");
+            resp.sendRedirect("errorPage");
+        } catch (Exception e) {
+            log.error("Exception deleting movie id: " + movieId + " for user " + userName, e);
+            session.setAttribute("error", "Error deleting reminder");
+            resp.sendRedirect("errorPage");
         }
     }
 }

@@ -60,7 +60,11 @@ public class CreateUserSubmitServlet extends HttpServlet {
             userError = checkUserLoop(users);
 
         } catch (HibernateException he) {
-            log.error("Error gathering all users", he);
+            log.error("Hibernate Exception gathering all users", he);
+            session.setAttribute("error", "Error selecting all users on creating user");
+            resp.sendRedirect("errorPage");
+        } catch (Exception e) {
+            log.error("Exception gathering all users", e);
             session.setAttribute("error", "Error selecting all users on creating user");
             resp.sendRedirect("errorPage");
         }
@@ -74,7 +78,11 @@ public class CreateUserSubmitServlet extends HttpServlet {
                 req.login(userName, password);
                 resp.sendRedirect("account");
             } catch (HibernateException he) {
-                log.error("Error creating user " + userName, he);
+                log.error("Hibernate Exception creating user " + userName, he);
+                session.setAttribute("error", "Error creating user");
+                resp.sendRedirect("errorPage");
+            } catch (Exception e) {
+                log.error("Exception creating user " + userName, e);
                 session.setAttribute("error", "Error creating user");
                 resp.sendRedirect("errorPage");
             }

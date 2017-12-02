@@ -15,6 +15,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+//TODO: Need to add error handling
 /**
  * This servlet handles the search results page for movieCalendar
  *

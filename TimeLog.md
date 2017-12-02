@@ -83,3 +83,4 @@
 | 11/28/17 | Completed the delete reminder functionality | 2 hours | Need to clean up the delete a bit yet |
 | 11/29/17 | Worked on getting the page to refresh after deleting a reminder | 2 hours | |
 | 11/30/17 | Worked on proper error handling for a few of the pages | 2 hours | |
+| 12/01/17 | Continued working on proper error handling for the site | 2 hours | Have a few more left to do yet|

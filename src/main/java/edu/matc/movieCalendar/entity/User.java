@@ -7,6 +7,7 @@ import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
+//TODO: Need to add javadoc
 @Entity
 @Table(name = "user")
 public class User implements java.io.Serializable {

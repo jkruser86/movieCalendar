@@ -1,6 +1,8 @@
 package edu.matc.movieCalendar.controller;
 
 import edu.matc.movieCalendar.persistence.UserDao;
+import org.apache.log4j.Logger;
+import org.hibernate.HibernateException;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -22,6 +24,8 @@ import java.io.IOException;
 )
 public class DeleteAccountServlet extends HttpServlet {
 
+    private final Logger log = Logger.getLogger(this.getClass());
+
     /**
      * The doGet for the delete account servlet
      *
@@ -34,15 +38,27 @@ public class DeleteAccountServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         UserDao dao = new UserDao();
         String userName = req.getRemoteUser();
-
         HttpSession session = req.getSession();
-        session.invalidate();
+        String url;
 
-        req.logout();
+        try {
+            dao.deleteUser(userName);
+            url = "/delete-account.jsp";
+            session.invalidate();
+            req.logout();
+        } catch (HibernateException he) {
+            log.error("Hibernate Exception deleting user " + userName, he);
+            session.setAttribute("error", "Error deleting user");
+            url = "/errorPage";
+        } catch (Exception e) {
+            log.error("Exception deleting user " + userName, e);
+            session.setAttribute("error", "Error deleting user");
+            url = "/errorPage";
+        }
 
-        dao.deleteUser(userName);
+        //session.invalidate();
+        //req.logout();
 
-        String url = "/delete-account.jsp";
         RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(url);
         dispatcher.forward(req, resp);
     }

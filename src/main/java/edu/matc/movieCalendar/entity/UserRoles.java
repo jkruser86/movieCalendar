@@ -2,6 +2,7 @@ package edu.matc.movieCalendar.entity;
 
 import javax.persistence.*;
 
+//TODO: Need to add javadoc
 @Entity
 @Table(name = "user_roles")
 public class UserRoles implements java.io.Serializable {

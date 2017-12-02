@@ -1,5 +1,6 @@
 package edu.matc.movieCalendar.controller;
 
+import edu.matc.movieCalendar.entity.User;
 import edu.matc.movieCalendar.persistence.UserDao;
 import org.apache.log4j.Logger;
 import org.hibernate.HibernateException;
@@ -10,6 +11,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 /**
@@ -36,14 +38,30 @@ public class AccountServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
+        HttpSession session = req.getSession();
         String url;
+
         try {
             UserDao userDao = new UserDao();
-            req.setAttribute("user", userDao.getUser(req.getRemoteUser()));
+            User user = userDao.getUser(req.getRemoteUser());
+            req.setAttribute("user", user);
             url = "/account.jsp";
         } catch (HibernateException he) {
-            log.error("Error while selecting user" + req.getRemoteUser(), he);
-            url = "/login-failure";
+            log.error("Hibernate Exception while selecting user " + req.getRemoteUser(), he);
+
+            req.logout();
+
+            session.setAttribute("error", "Error selecting user on logging in");
+            url = "/errorPage";
+
+        } catch (Exception e) {
+            log.error("Exception while selecting user " + req.getRemoteUser(), e);
+
+            req.logout();
+
+            session.setAttribute("error", "Error selecting user on logging in");
+            url = "/errorPage";
+
         }
 
         RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(url);
