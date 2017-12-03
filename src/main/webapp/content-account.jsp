@@ -1,5 +1,10 @@
 <%@include file="taglib.jsp"%>
 
+<c:if test="${updatedAcct == true}">
+    <div class="alert alert-success">
+        <strong>Success!</strong> Account updated successfully.
+    </div>
+</c:if>
 <div class="container-fluid">
     <div class="row">
         <h2>Account Page</h2>

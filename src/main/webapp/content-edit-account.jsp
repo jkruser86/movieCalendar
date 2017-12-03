@@ -1,6 +1,12 @@
+<%@include file="taglib.jsp"%>
 <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
 <script src='http://cdnjs.cloudflare.com/ajax/libs/bootstrap-validator/0.4.5/js/bootstrapvalidator.min.js'></script>
 
+<c:if test="${createUserError == 'email'}">
+    <div class="alert alert-danger">
+        <strong>Email Exists!</strong> Email address already exists. Please user another email address.
+    </div>
+</c:if>
 <div class="container">
     <form class="form-horizontal" action="saveEdit" method="post" id="reg_form">
         <fieldset>
@@ -8,15 +14,6 @@
             <legend> Edit Account </legend>
 
             <!-- Text Input -->
-            <div class="form-group">
-                <label class="col-md-4 control-label">User Name</label>
-                <div class="col-md-6 inputGroupContainer">
-                    <div class="input-group"><span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-                        <input name="userName" placeholder="User Name" class="form-control" type="text" disabled>
-                    </div>
-                </div>
-            </div>
-
             <div class="form-group">
                 <label class="col-md-4 control-label">E-Mail</label>
                 <div class="col-md-6 inputGroupContainer">
@@ -67,4 +64,4 @@
     </form>
 </div>
 
-<script type="text/javascript" src="javascript/validateSignup.js"></script>
+<script type="text/javascript" src="validateEdit.js"></script>
