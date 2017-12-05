@@ -84,3 +84,6 @@
 | 11/29/17 | Worked on getting the page to refresh after deleting a reminder | 2 hours | |
 | 11/30/17 | Worked on proper error handling for a few of the pages | 2 hours | |
 | 12/01/17 | Continued working on proper error handling for the site | 2 hours | Have a few more left to do yet|
+| 12/02/17 | Worked on more error handling for the site | 2 hours | |
+| 12/03/17 | Continued working on error handling | 2 hours | |
+| 12/04/17 | Finished error handling on all web pages | 2 hours | |
