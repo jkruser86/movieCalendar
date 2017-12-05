@@ -11,11 +11,11 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-//TODO: Need to add error handling
 /**
  * This servlet handles the search results page for movieCalendar
  *
@@ -29,6 +29,11 @@ public class SearchResultsServlet extends HttpServlet {
 
     private final Logger log = Logger.getLogger(this.getClass());
 
+    private String searchTerm;
+    private MovieApiCalls movieApiCalls;
+    private List<MovieResultsItem> allResults;
+    private List<Movie> allMovies;
+
     /**
      * The doGet for the search results servlet
      *
@@ -40,27 +45,85 @@ public class SearchResultsServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        String searchTerm = req.getParameter("term").replaceAll(" ", "+");
-        MovieApiCalls movieApiCalls = new MovieApiCalls();
-        List<MovieResultsItem> allResults = new ArrayList<MovieResultsItem>();
+        searchTerm = req.getParameter("term").replaceAll(" ", "+");
+        movieApiCalls = new MovieApiCalls();
+        allResults = new ArrayList<MovieResultsItem>();
+        allMovies = new ArrayList<Movie>();
 
+        HttpSession session = req.getSession();
+        String redirectCheck;
+
+        redirectCheck = allMovieResults(session);
+
+        if (redirectCheck.equals("")) {
+            redirectCheck = getMovieInfo(session);
+
+            if (redirectCheck.equals("")) {
+                req.setAttribute("movies", allMovies);
+                String url = "/search-results.jsp";
+                RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(url);
+
+                dispatcher.forward(req, resp);
+            } else {
+                RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(redirectCheck);
+
+                dispatcher.forward(req, resp);
+            }
+        } else {
+            RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(redirectCheck);
+
+            dispatcher.forward(req, resp);
+        }
+
+    }
+
+    /**
+     * Gets all the movies for the given search term from the api
+     *
+     * @param session the current server session
+     * @return the error site if an error occurs
+     */
+    private String allMovieResults(HttpSession session) {
         try {
             allResults = movieApiCalls.getAllResults(searchTerm);
+            return "";
         } catch (IOException io) {
-            log.error("Error getting all search results", io);
+            log.error("IOException getting all search results from api for term " + searchTerm, io);
+            session.setAttribute("error", "Error gathering results from movie api");
+            return "errorPage";
+        } catch (Exception e) {
+            log.error("Exception getting all search results from api for term " + searchTerm, e);
+            session.setAttribute("error", "Error gathering results from movie api");
+            return "errorPage";
         }
+    }
 
-        List<Movie> allMovies = new ArrayList<Movie>();
-        for (MovieResultsItem item : allResults) {
+    /**
+     * Gets the movie info from the api for each movie
+     *
+     * @param session the current server session
+     * @return the error site if an error occurs
+     */
+    private String getMovieInfo(HttpSession session) {
 
-            Movie movie = movieApiCalls.getMovieInfo(item.getId());
-            allMovies.add(movie);
+        int movieId = 0;
+
+        try {
+            for (MovieResultsItem item : allResults) {
+
+                movieId = item.getId();
+                Movie movie = movieApiCalls.getMovieInfo(movieId);
+                allMovies.add(movie);
+            }
+            return "";
+        } catch (IOException io ) {
+            log.error("IOException getting movie data from api for movie " + movieId, io);
+            session.setAttribute("error", "Error gathering movie info from api");
+            return "errorPage";
+        } catch (Exception e) {
+            log.error("Exception getting movie data from api for movie " + movieId, e);
+            session.setAttribute("error", "Error gathering movie info from api");
+            return "errorPage";
         }
-
-        req.setAttribute("movies", allMovies);
-        String url = "/search-results.jsp";
-        RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(url);
-
-        dispatcher.forward(req, resp);
     }
 }

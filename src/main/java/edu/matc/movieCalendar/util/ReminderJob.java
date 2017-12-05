@@ -4,11 +4,13 @@ import edu.matc.movieCalendar.entity.Reminders;
 import edu.matc.movieCalendar.entity.User;
 import edu.matc.movieCalendar.persistence.UserDao;
 import org.apache.log4j.Logger;
+import org.hibernate.HibernateException;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 import javax.mail.*;
@@ -52,9 +54,13 @@ public class ReminderJob implements org.quartz.Job {
         //log.info("ReminderJob is executing");
 
         UserDao userDao = new UserDao();
-        List<User> users = userDao.getAllUsers();
-
-        allRemindersLoop(users);
+        List<User> users = new ArrayList<User>();
+        try {
+            users = userDao.getAllUsers();
+            allRemindersLoop(users);
+        } catch (HibernateException he) {
+            log.error("Hibernate Exception gathering all errors", he);
+        }
 
     }
 
@@ -73,7 +79,7 @@ public class ReminderJob implements org.quartz.Job {
                 try {
                     movie = movieApiCalls.getMovieInfo(reminder.getMovieId());
                 } catch (IOException io) {
-                    log.error("Error getting all reminders", io);
+                    log.error("Error getting all reminders for user " + user.getUserName(), io);
                 }
 
                 checkReminder(movie, reminder);
@@ -127,7 +133,13 @@ public class ReminderJob implements org.quartz.Job {
      */
     public void sendReminder(String inputUsername, String emailMessage) {
 
-        String userEmail = getEmailAddress(inputUsername);
+        String userEmail = "";
+
+        try {
+            userEmail = getEmailAddress(inputUsername);
+        } catch (HibernateException he) {
+            log.error("Hibernate Exception gathering email address for user " + inputUsername, he);
+        }
 
         Session session = Session.getInstance(properties,
                 new javax.mail.Authenticator() {
@@ -146,10 +158,8 @@ public class ReminderJob implements org.quartz.Job {
             message.setText("Dear " + inputUsername + ", \n\n " + emailMessage);
 
             Transport.send(message);
-
-            System.out.println("Email Sent");
         } catch (MessagingException me) {
-            log.error("Error sending email", me);
+            log.error("Error sending email for user " + inputUsername, me);
         }
     }
 
@@ -159,7 +169,7 @@ public class ReminderJob implements org.quartz.Job {
      * @param username the username to use to find the email address
      * @return the users email address
      */
-    public String getEmailAddress(String username) {
+    public String getEmailAddress(String username) throws HibernateException {
         UserDao userDao = new UserDao();
         User user = userDao.getUser(username);
 

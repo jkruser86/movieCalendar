@@ -20,7 +20,6 @@ import static org.quartz.JobBuilder.newJob;
 import static org.quartz.SimpleScheduleBuilder.simpleSchedule;
 import static org.quartz.TriggerBuilder.newTrigger;
 
-//TODO: Need to add error handling
 /**
  * This servlet handles the starting of the Quartz scheduler for movieCalendar
  *
@@ -47,15 +46,16 @@ public class QuartzStartServlet extends HttpServlet {
 
         try {
             startQuartz();
+
+            req.setAttribute("date", LocalDate.now());
+            String url = "/quartz-success.jsp";
+            RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(url);
+
+            dispatcher.forward(req, resp);
         } catch (Exception e) {
-            log.error("Error starting Quartz", e);
+            log.error("Exception starting Quartz", e);
         }
 
-        req.setAttribute("date", LocalDate.now());
-        String url = "/quartz-success.jsp";
-        RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(url);
-
-        dispatcher.forward(req, resp);
     }
 
     /**
