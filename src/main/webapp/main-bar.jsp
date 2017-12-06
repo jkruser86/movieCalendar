@@ -6,6 +6,13 @@
                 <a class="navbar-brand" href="/movieCalendar">Movie Calendar</a>
             </div>
 
+            <form class="navbar-form navbar-left" method="GET" action="search-results">
+                <div class="form-group">
+                    <input type="text" class="form-control" placeholder="Search Movie" id="searchTerm" name="term">
+                </div>
+                <button type="submit" class="btn btn-default">Submit</button>
+            </form>
+
             <ul class="nav navbar-nav navbar-right">
                 <c:choose>
                     <c:when test="${pageContext.request.userPrincipal == null}">
