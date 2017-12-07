@@ -15,6 +15,11 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.Set;
 
+/**
+ * The servlet that handles the deletion of saved reminders for a user
+ *
+ * @author Jamie Kruser
+ */
 @WebServlet(
         name = "deleteReminder",
         urlPatterns = {"/deleteReminder"}
@@ -23,51 +28,113 @@ public class DeleteReminderServlet extends HttpServlet {
 
     private final Logger log = Logger.getLogger(this.getClass());
 
+    private UserDao userDao;
+    private User user;
+    private Set<Reminders> reminders;
+
+    /**
+     * The post for the servlet which handles the deletion of the reminder
+     *
+     * @param req the request for the servlet
+     * @param resp the response for the servlet
+     * @throws ServletException  handles the ServletException
+     * @throws IOException handles the IOException
+     */
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         int movieId = Integer.parseInt(req.getParameter("movie_id"));
 
-        UserDao userDao = new UserDao();
-        User user = new User();
-        Set<Reminders> reminders = null;
+        userDao = new UserDao();
+        user = new User();
+        reminders = null;
         HttpSession session = req.getSession();
         String userName = req.getRemoteUser();
+        Reminders deleteReminder = new Reminders();
 
+        String redirectCheck;
+
+        redirectCheck = getUser(session, userName);
+
+        if (redirectCheck.equals("")) {
+            reminders = user.getReminders();
+            deleteReminder = getReminder(movieId);
+
+            if (deleteReminder == null) {
+                log.error("Reminder not found while deleting for movie " + movieId + " and user " + userName);
+                session.setAttribute("error", "Error while deleting reminder");
+                resp.sendRedirect("errorPage");
+            } else {
+                reminders.remove(deleteReminder);
+                user.setReminders(reminders);
+                redirectCheck = updateUser(session, userName);
+
+                if (!redirectCheck.equals("")) {
+                    resp.sendRedirect(redirectCheck);
+                }
+            }
+        } else {
+            resp.sendRedirect(redirectCheck);
+        }
+    }
+
+    /**
+     * Gets the user from the database
+     *
+     * @param session the current server session
+     * @param userName the user name of the current user
+     * @return the response page to forward if anything goes wrong
+     */
+    private String getUser(HttpSession session, String userName) {
         try {
             user = userDao.getUser(userName);
-            reminders = user.getReminders();
+            return "";
         } catch (HibernateException he) {
             log.error("Hibernate Exception gathering reminders for user " + userName, he);
             session.setAttribute("error", "Error gathering reminders");
-            resp.sendRedirect("errorPage");
+            return "errorPage";
         } catch (Exception e) {
             log.error("Exception gathering reminders for user " + userName, e);
             session.setAttribute("error", "Error gathering reminders");
-            resp.sendRedirect("errorPage");
+            return "errorPage";
         }
+    }
 
-        Reminders deleteReminder = new Reminders();
-
+    /**
+     * Loops through all reminders to find the matching movie
+     *
+     * @param movieId the movie to find in the reminders
+     * @return the reminder for the movie
+     */
+    private Reminders getReminder(int movieId) {
         for (Reminders reminder : reminders) {
             if (reminder.getMovieId() == movieId) {
-                deleteReminder = reminder;
-                break;
+                return reminder;
             }
         }
 
+        return null;
+    }
+
+    /**
+     * Updates the user and their reminders to remove the deleted reminder
+     *
+     * @param session the current server session
+     * @param userName the user name of the current user
+     * @return the response page to forward if anything goes wrong
+     */
+    private String updateUser(HttpSession session, String userName) {
         try {
-            reminders.remove(deleteReminder);
-            user.setReminders(reminders);
             userDao.updateUser(user);
+            return "";
         } catch (HibernateException he) {
-            log.error("HibernateException deleting movie id: " + movieId + " for user " + userName, he);
+            log.error("HibernateException while updating after delete for user " + userName, he);
             session.setAttribute("error", "Error deleting reminder");
-            resp.sendRedirect("errorPage");
+            return "errorPage";
         } catch (Exception e) {
-            log.error("Exception deleting movie id: " + movieId + " for user " + userName, e);
+            log.error("Exception while updating after delete for user " + userName, e);
             session.setAttribute("error", "Error deleting reminder");
-            resp.sendRedirect("errorPage");
+            return "errorPage";
         }
     }
 }

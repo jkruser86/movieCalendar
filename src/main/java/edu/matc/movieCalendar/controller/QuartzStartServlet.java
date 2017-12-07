@@ -54,6 +54,9 @@ public class QuartzStartServlet extends HttpServlet {
             dispatcher.forward(req, resp);
         } catch (Exception e) {
             log.error("Exception starting Quartz", e);
+
+            req.setAttribute("error", "Error starting quartz");
+            resp.sendRedirect("errorPage");
         }
 
     }

@@ -15,6 +15,7 @@ import java.io.IOException;
 public class ErrorServlet extends HttpServlet {
 
     //TODO: Setup error page on content-error.jsp
+    //TODO: Add javadoc
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

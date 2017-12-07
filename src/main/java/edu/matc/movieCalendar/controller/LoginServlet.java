@@ -20,7 +20,7 @@ import java.io.IOException;
 public class LoginServlet extends HttpServlet {
 
     /**
-     * The doGet for the login servlet
+     * The doGet for the login servlet. Forwards to login.jsp
      *
      * @param req the request for the servlet
      * @param resp the response for the servlet

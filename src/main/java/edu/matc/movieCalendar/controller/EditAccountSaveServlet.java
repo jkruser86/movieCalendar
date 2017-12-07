@@ -32,7 +32,7 @@ public class EditAccountSaveServlet extends HttpServlet {
     private UserDao userDao;
 
     /**
-     * The doPost for the account edit save servlet
+     * The doPost for the account edit save servlet which saves an edited account
      *
      * @param req the request for the servlet
      * @param resp the response for the servlet
@@ -53,34 +53,29 @@ public class EditAccountSaveServlet extends HttpServlet {
 
         redirectCheck = checkEmailExists(session, email, userName);
 
-        if (redirectCheck == "") {
+        if (redirectCheck.equals("")) {
             redirectCheck = getUser(session, userName);
-            if (redirectCheck == "") {
+            if (redirectCheck.equals("")) {
                 user.setUserEmail(email);
                 user.setUserPass(password);
 
                 redirectCheck = updateUser(session);
 
-                if (redirectCheck == "") {
+                if (redirectCheck.equals("")) {
                     resp.sendRedirect("account");
                 } else {
-                    String url = redirectCheck;
-                    RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(url);
-
-                    dispatcher.forward(req, resp);
+                    resp.sendRedirect(redirectCheck);
                 }
 
             } else {
-                String url = redirectCheck;
-                RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(url);
-
-                dispatcher.forward(req, resp);
+                resp.sendRedirect(redirectCheck);
             }
-        } else {
-            String url = redirectCheck;
-            RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(url);
+        } else if (redirectCheck.equals("/editAccount")) {
+            RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(redirectCheck);
 
             dispatcher.forward(req, resp);
+        } else {
+            resp.sendRedirect(redirectCheck);
         }
     }
 
@@ -104,11 +99,11 @@ public class EditAccountSaveServlet extends HttpServlet {
         } catch (HibernateException he) {
             log.error("Hibernate Exception getting all users for email check", he);
             session.setAttribute("error", "Error checking for email existing");
-            return "/errorPage";
+            return "errorPage";
         } catch (Exception e) {
             log.error("Exception getting all users for email check", e);
             session.setAttribute("error", "Error checking for email existing");
-            return "/errorPage";
+            return "errorPage";
         }
 
         return "";
@@ -128,11 +123,11 @@ public class EditAccountSaveServlet extends HttpServlet {
         } catch (HibernateException he) {
             log.error("Hibernate Exception finding user " + userName + " to update", he);
             session.setAttribute("error", "Error finding user to update");
-            return "/errorPage";
+            return "errorPage";
         } catch (Exception e) {
             log.error("Exception finding user " + userName + " to update", e);
             session.setAttribute("error", "Error finding user to update");
-            return "/errorPage";
+            return "errorPage";
         }
     }
 

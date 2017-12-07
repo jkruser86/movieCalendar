@@ -20,7 +20,7 @@ import java.io.IOException;
 public class AdminServlet extends HttpServlet {
 
     /**
-     * The doGet for the admin servlet
+     * The doGet for the admin servlet. Forwards to the admin-acct.jsp
      *
      * @param req the request for the servlet
      * @param resp the response for the servlet

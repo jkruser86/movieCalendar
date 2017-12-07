@@ -28,7 +28,7 @@ public class AccountServlet extends HttpServlet {
     private final Logger log = Logger.getLogger(this.getClass());
 
     /**
-     * The doGet for the account servlet
+     * The doGet for the account servlet. Gathers account data and sets it as an attribute to the request
      *
      * @param req the request for the servlet
      * @param resp the response for the servlet
@@ -46,13 +46,17 @@ public class AccountServlet extends HttpServlet {
             User user = userDao.getUser(req.getRemoteUser());
             req.setAttribute("user", user);
             url = "/account.jsp";
+            RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(url);
+
+            dispatcher.forward(req, resp);
         } catch (HibernateException he) {
             log.error("Hibernate Exception while selecting user " + req.getRemoteUser(), he);
 
             req.logout();
 
             session.setAttribute("error", "Error selecting user on logging in");
-            url = "/errorPage";
+            url = "errorPage";
+            resp.sendRedirect(url);
 
         } catch (Exception e) {
             log.error("Exception while selecting user " + req.getRemoteUser(), e);
@@ -60,12 +64,11 @@ public class AccountServlet extends HttpServlet {
             req.logout();
 
             session.setAttribute("error", "Error selecting user on logging in");
-            url = "/errorPage";
+            url = "errorPage";
+            resp.sendRedirect(url);
 
         }
 
-        RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(url);
 
-        dispatcher.forward(req, resp);
     }
 }

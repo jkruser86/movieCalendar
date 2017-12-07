@@ -32,6 +32,7 @@ public class CreateUserSubmitServlet extends HttpServlet {
     private User user;
     private UserRoles userRoles;
     private UserDao userDao;
+    private List<User> users;
 
     /**
      * The doPost for the create user submit servlet
@@ -48,47 +49,63 @@ public class CreateUserSubmitServlet extends HttpServlet {
         user = null;
         userRoles = new UserRoles();
         userDao = new UserDao();
-        List<User> users = new ArrayList<User>();
+        users = new ArrayList<User>();
         HttpSession session = req.getSession();
+        String redirectCheck;
 
         userName = req.getParameter("userName");
         password = req.getParameter("password");
         email = req.getParameter("email");
 
-        try {
-            users = userDao.getAllUsers();
+        redirectCheck = getUsers(session);
+
+        if (redirectCheck.equals("")) {
             userError = checkUserLoop(users);
+            if (!userError.equals("")) {
+                session.setAttribute("createUserError", userError);
+                resp.sendRedirect("create-acct");
+            } else {
+                redirectCheck = createUser(session);
 
-        } catch (HibernateException he) {
-            log.error("Hibernate Exception gathering all users", he);
-            session.setAttribute("error", "Error selecting all users on creating user");
-            resp.sendRedirect("errorPage");
-        } catch (Exception e) {
-            log.error("Exception gathering all users", e);
-            session.setAttribute("error", "Error selecting all users on creating user");
-            resp.sendRedirect("errorPage");
-        }
-
-        if (!userError.equals("")) {
-            session.setAttribute("createUserError", userError);
-            resp.sendRedirect("create-acct");
-        } else {
-            try {
-                createUser();
-                req.login(userName, password);
-                resp.sendRedirect("account");
-            } catch (HibernateException he) {
-                log.error("Hibernate Exception creating user " + userName, he);
-                session.setAttribute("error", "Error creating user");
-                resp.sendRedirect("errorPage");
-            } catch (Exception e) {
-                log.error("Exception creating user " + userName, e);
-                session.setAttribute("error", "Error creating user");
-                resp.sendRedirect("errorPage");
+                if (redirectCheck.equals("")) {
+                    req.login(userName, password);
+                    resp.sendRedirect("account");
+                } else {
+                    resp.sendRedirect(redirectCheck);
+                }
             }
+        } else {
+            resp.sendRedirect(redirectCheck);
         }
     }
 
+    /**
+     * Gets all users from the database
+     *
+     * @param session the current session for the server
+     * @return the response page to forward if anything goes wrong
+     */
+    private String getUsers(HttpSession session) {
+        try {
+            users = userDao.getAllUsers();
+            return "";
+        } catch (HibernateException he) {
+            log.error("Hibernate Exception gathering all users", he);
+            session.setAttribute("error", "Error selecting all users on creating user");
+            return "errorPage";
+        } catch (Exception e) {
+            log.error("Exception gathering all users", e);
+            session.setAttribute("error", "Error selecting all users on creating user");
+            return "errorPage";
+        }
+    }
+
+    /**
+     * Checks to see if user name or email already exist
+     *
+     * @param users the list of users
+     * @return a string value if either username or email already exist; otherwise spaces
+     */
     protected String checkUserLoop(List<User> users) {
         for (User user: users) {
             if (user.getUserName().equals(userName)) {
@@ -101,7 +118,13 @@ public class CreateUserSubmitServlet extends HttpServlet {
         return "";
     }
 
-    protected void createUser() throws HibernateException {
+    /**
+     * Creates the user with the passed in values to the servlet
+     *
+     * @param session the current server session
+     * @return the error site if an error occurs
+     */
+    private String createUser(HttpSession session) {
         user = new User();
         user.setUserName(userName);
         user.setUserPass(password);
@@ -112,6 +135,18 @@ public class CreateUserSubmitServlet extends HttpServlet {
 
         user.getUserRoles().add(userRoles);
 
-        userDao.addUser(user);
+        try {
+            userDao.addUser(user);
+            return "";
+        } catch (HibernateException he) {
+            log.error("Hibernate Exception creating user " + userName, he);
+            session.setAttribute("error", "Error creating user");
+            return "errorPage";
+        } catch (Exception e) {
+            log.error("Exception creating user " + userName, e);
+            session.setAttribute("error", "Error creating user");
+            return "errorPage";
+        }
+
     }
 }

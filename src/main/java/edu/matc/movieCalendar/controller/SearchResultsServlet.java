@@ -65,14 +65,10 @@ public class SearchResultsServlet extends HttpServlet {
 
                 dispatcher.forward(req, resp);
             } else {
-                RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(redirectCheck);
-
-                dispatcher.forward(req, resp);
+                resp.sendRedirect(redirectCheck);
             }
         } else {
-            RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(redirectCheck);
-
-            dispatcher.forward(req, resp);
+            resp.sendRedirect(redirectCheck);
         }
 
     }

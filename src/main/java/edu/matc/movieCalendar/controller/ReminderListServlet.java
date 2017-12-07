@@ -39,7 +39,7 @@ public class ReminderListServlet extends HttpServlet {
     private String userName;
 
     /**
-     * The get process for the reminder list servlet
+     * The get process for the reminder list servlet. Gets all reminders for the user.
      *
      * @param req the server request
      * @param resp the server response
@@ -70,14 +70,10 @@ public class ReminderListServlet extends HttpServlet {
 
                 dispatcher.forward(req, resp);
             } else {
-                RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(redirectCheck);
-
-                dispatcher.forward(req, resp);
+                resp.sendRedirect(redirectCheck);
             }
         } else {
-            RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(redirectCheck);
-
-            dispatcher.forward(req, resp);
+            resp.sendRedirect(redirectCheck);
         }
     }
 

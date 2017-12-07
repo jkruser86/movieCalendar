@@ -76,14 +76,10 @@ public class MovieSaveServlet extends HttpServlet {
         if (redirectCheck.equals("")) {
             redirectCheck = createReminder(session, userName);
             if (!redirectCheck.equals("")) {
-                RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(redirectCheck);
-
-                dispatcher.forward(req, resp);
+                resp.sendRedirect(redirectCheck);
             }
         } else {
-            RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(redirectCheck);
-
-            dispatcher.forward(req, resp);
+            resp.sendRedirect(redirectCheck);
         }
     }
 

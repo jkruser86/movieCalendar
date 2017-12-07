@@ -11,6 +11,6 @@ $(document).on("submit", "#add_form", function(event) {
     });
     $('#deleteMovieModal').on('hidden.bs.modal', function () {
         location.reload();
-    })
+    });
     event.preventDefault();
 });

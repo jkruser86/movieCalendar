@@ -21,7 +21,7 @@ import java.io.IOException;
 public class LogoutServlet extends HttpServlet {
 
     /**
-     * The doGet for the logout servlet
+     * The doGet for the logout servlet. Forwards to logout.jsp
      *
      * @param req the request for the servlet
      * @param resp the response for the servlet

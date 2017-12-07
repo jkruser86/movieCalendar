@@ -20,7 +20,7 @@ import java.io.IOException;
 public class EditAccountServlet extends HttpServlet {
 
     /**
-     * The doPost for the edit account servlet
+     * The doPost for the edit account servlet. Forwards to edit-account.jsp
      *
      * @param req the request for the servlet
      * @param resp the response for the servlet

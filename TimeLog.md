@@ -87,3 +87,5 @@
 | 12/02/17 | Worked on more error handling for the site | 2 hours | |
 | 12/03/17 | Continued working on error handling | 2 hours | |
 | 12/04/17 | Finished error handling on all web pages | 2 hours | |
+| 12/05/17 | Found issue with exception handling so tried fixing that | 2 hours | |
+| 12/06/17 | Presented project and continued to fix exception handling | 2 hours | |

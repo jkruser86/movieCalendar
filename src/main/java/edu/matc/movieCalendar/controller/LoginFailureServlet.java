@@ -20,7 +20,7 @@ import java.io.IOException;
 public class LoginFailureServlet extends HttpServlet {
 
     /**
-     * The doPost for the login failure servlet
+     * The doPost for the login failure servlet. Forwards to failed-login.jsp
      *
      * @param req the request for the servlet
      * @param resp the response for the servlet

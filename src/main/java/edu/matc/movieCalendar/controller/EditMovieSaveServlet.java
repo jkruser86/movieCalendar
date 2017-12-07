@@ -76,9 +76,7 @@ public class EditMovieSaveServlet extends HttpServlet {
                 log.error("Error finding reminder for movie " + movieId);
                 session.setAttribute("error", "Error finding reminder");
                 String url = "errorPage";
-                RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(url);
-
-                dispatcher.forward(req, resp);
+                resp.sendRedirect(url);
             } else {
                 reminders.remove(updateReminder);
 
@@ -92,15 +90,11 @@ public class EditMovieSaveServlet extends HttpServlet {
                 if (redirectCheck.equals("")) {
                     session.setAttribute("update", true);
                 } else {
-                    RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(redirectCheck);
-
-                    dispatcher.forward(req, resp);
+                    resp.sendRedirect(redirectCheck);
                 }
             }
         } else {
-            RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(redirectCheck);
-
-            dispatcher.forward(req, resp);
+            resp.sendRedirect(redirectCheck);
         }
     }
 

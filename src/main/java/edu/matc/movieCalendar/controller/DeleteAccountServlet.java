@@ -27,7 +27,7 @@ public class DeleteAccountServlet extends HttpServlet {
     private final Logger log = Logger.getLogger(this.getClass());
 
     /**
-     * The doGet for the delete account servlet
+     * The doGet for the delete account servlet. Forwards to the delete-account.jsp page
      *
      * @param req the request for the servlet
      * @param resp the response for the servlet
@@ -46,20 +46,22 @@ public class DeleteAccountServlet extends HttpServlet {
             url = "/delete-account.jsp";
             session.invalidate();
             req.logout();
+
+            RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(url);
+            dispatcher.forward(req, resp);
         } catch (HibernateException he) {
             log.error("Hibernate Exception deleting user " + userName, he);
             session.setAttribute("error", "Error deleting user");
-            url = "/errorPage";
+            url = "errorPage";
+
+            resp.sendRedirect(url);
         } catch (Exception e) {
             log.error("Exception deleting user " + userName, e);
             session.setAttribute("error", "Error deleting user");
-            url = "/errorPage";
+            url = "errorPage";
+
+            resp.sendRedirect(url);
         }
 
-        //session.invalidate();
-        //req.logout();
-
-        RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(url);
-        dispatcher.forward(req, resp);
     }
 }
