@@ -273,7 +273,7 @@ public class MovieDataResults{
 	/**
 	 * Sets the local id field
 	 *
-	 * @param title the value to set the local id field to
+	 * @param id the value to set the local id field to
 	 */
 	public void setId(int id){
 		this.id = id;
@@ -435,7 +435,7 @@ public class MovieDataResults{
 	/**
 	 * Sets the local releaseDate field
 	 *
-	 * @param title the value to set the local releaseDate field to
+	 * @param releaseDate the value to set the local releaseDate field to
 	 */
 	public void setReleaseDate(String releaseDate){
 		this.releaseDate = releaseDate;
@@ -525,7 +525,7 @@ public class MovieDataResults{
 	/**
 	 * Sets the local homepage field
 	 *
-	 * @param title the value to set the local homepage field to
+	 * @param homepage the value to set the local homepage field to
 	 */
 	public void setHomepage(String homepage){
 		this.homepage = homepage;

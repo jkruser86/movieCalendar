@@ -1,0 +1,6 @@
+
+edu.matc.movieCalendar.controller
+edu.matc.movieCalendar.entity
+edu.matc.movieCalendar.persistence
+edu.matc.movieCalendar.util
+org.themoviedb.moviesearch

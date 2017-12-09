@@ -273,7 +273,7 @@ public class MovieResultsItem {
 	/**
 	 * Sets the local adult field
 	 *
-	 * @param id the value to set the local adult field
+	 * @param adult the value to set the local adult field
 	 */
 	public void setAdult(boolean adult){
 		this.adult = adult;

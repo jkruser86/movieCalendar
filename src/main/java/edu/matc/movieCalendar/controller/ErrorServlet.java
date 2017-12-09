@@ -8,15 +8,25 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+/**
+ * The servlet that handles the error page
+ *
+ * @author Jamie Kruser
+ */
 @WebServlet (
         name = "errorPage",
         urlPatterns = {"/errorPage"}
 )
 public class ErrorServlet extends HttpServlet {
 
-    //TODO: Setup error page on content-error.jsp
-    //TODO: Add javadoc
-
+    /**
+     * The doGet for the error servlet. Forwards to the error.jsp
+     *
+     * @param req the request for the servlet
+     * @param resp the response for the servlet
+     * @throws ServletException  handles the ServletException
+     * @throws IOException handles the IOException
+     */
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String url = "/error.jsp";

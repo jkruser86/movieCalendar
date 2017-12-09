@@ -89,3 +89,5 @@
 | 12/04/17 | Finished error handling on all web pages | 2 hours | |
 | 12/05/17 | Found issue with exception handling so tried fixing that | 2 hours | |
 | 12/06/17 | Presented project and continued to fix exception handling | 2 hours | |
+| 12/07/17 | Cleaned up project and got everything working, tested, and javadoc | 3 hours | |
+| 12/08/17 | Made video for site and finished up all left over tasks. Project should be complete | 2 hours | |

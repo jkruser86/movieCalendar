@@ -15,7 +15,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-//TODO: Possibly add check for existing reminder
 /**
  * This servlet handles the saving of a movie for a user
  *
